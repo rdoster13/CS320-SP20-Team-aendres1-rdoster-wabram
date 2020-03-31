@@ -1,7 +1,7 @@
 package edu.ycp.cs320.lab02a_wabram.model;
 
 public class Pawn extends Piece {
-	
+
 	/* Methods need added:
 	  * verifyPromo(): boolean
 	  * promo(): obj (promote into another piece)

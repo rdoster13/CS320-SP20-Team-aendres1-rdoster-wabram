@@ -13,7 +13,7 @@ public class Board {
     } 
     
     public void setPosition(int col, int row, Piece piece) {
-		this.squares[col][row] = squares[col][row];
+		  this.squares[col][row] = squares[col][row];
     	
     }
       
