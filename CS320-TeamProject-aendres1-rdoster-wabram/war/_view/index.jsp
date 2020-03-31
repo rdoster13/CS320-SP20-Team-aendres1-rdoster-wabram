@@ -30,6 +30,11 @@
 			<input type="Submit" name="submit" value="Login">
 		</form>
 		
+		<br/><br/>
+		
+		<form action="${pageContext.servletContext.contextPath}/boardPage" method="Play Chess">
+			<input type="Submit" name="submit" value="Play Chess">
+		</form>
 	</body>
 	
 </html>
