@@ -4,13 +4,15 @@ public class Position {
     private int col; 
     private int row; 
     private Piece piece;
-  
-    public Position(int col, int row, Piece piece) {  
-        this.setCol(col); 
-        this.setRow(row); 
-    } 
-  
-    public int getCol() { 
+   
+    // constructor needed to initialize board
+    public Position(int col, int row, Piece piece) {
+    	this.setCol(col);
+    	this.setRow(row);
+    	this.setPiece(piece);
+    }
+
+	public int getCol() { 
         return this.col; 
     } 
   
