@@ -5,7 +5,7 @@ import java.awt.List;
 public class Piece {
     private Piece piece; 
     private boolean color;
-    private int[][] location;
+    private int[][] position;
     
 	/* attributes:
 	 * piece type: string
@@ -28,32 +28,23 @@ public class Piece {
     }
 
 	public boolean isWhite() {
-		return color;
+		if (color == false) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void setWhite(boolean color) {
 		this.color = color;
 	}
 
-	public int[][] getLocation() {
-		return location;
+	public int[][] getPosition() {
+		return position;
 	}
 
-	public void setLocation(int[][] location) {
-		this.location = location;
+	public void setPosition(int[][] position) {
+		this.position = position;
 	}
 
-	public boolean validateMove() {
-		return false;
-	} 
-	
-	// Have to store the find moves as ArrayList of pairs of ints?
-	public List findMoves() {
-		return null;
-	}
-	
-	// Same return type as position: [][]
-	public Position updatePosition() {
-		return null;
-	}
 }
