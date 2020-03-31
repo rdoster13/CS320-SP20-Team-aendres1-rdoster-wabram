@@ -32,4 +32,5 @@ public class PositionTest {
 		model.setPiece(pawn);
 		assertEquals(pawn, model.getPiece());
 	}
+
 }
