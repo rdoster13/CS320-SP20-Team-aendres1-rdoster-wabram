@@ -2,6 +2,8 @@ package edu.ycp.cs320.lab02a_wabram.controller;
 
 import edu.ycp.cs320.lab02a_wabram.model.Board;
 import edu.ycp.cs320.lab02a_wabram.model.Piece;
+import edu.ycp.cs320.lab02a_wabram.model.BoardInterface;;
+
 
 public class BoardController {
 	private Board model;
