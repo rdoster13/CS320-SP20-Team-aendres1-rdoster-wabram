@@ -1,63 +1,46 @@
 package edu.ycp.cs320.lab02a_wabram.model;
 
-// model class for GuessingGame
-// only the controller should be allowed to call the set methods
-// the JSP will call the "get" and "is" methods implicitly
-// when the JSP specifies game.min, that gets converted to
-//    a call to model.getMin()
-// when the JSP specifies if(game.done), that gets converted to
-//    a call to model.isDone()
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+
+//****Used Prof Hake example****
 public class LoginPage {
-	//private double first, second, third, multResult, addResult;
-	private String username, password;
+	
+	private ArrayList<String> usernames;
+	private ArrayList<String> passwords;
+	private Map<String, String> creds;
+	
+	// create model - test version 
 	public LoginPage() {
-	}
+		usernames = new ArrayList<String>();
+		passwords = new ArrayList<String>();
+		creds = new TreeMap<String, String>();
+		
+		usernames.add("Bill");
+		usernames.add("Rob");
+		usernames.add("Alina");
+		
+		passwords.add("Bill");
+		passwords.add("Rob");
+		passwords.add("Alina");
+		
+		for (int i = 0; i < usernames.size(); i++) {
+			creds.put(usernames.get(i), passwords.get(i));
+		}
+	}		
 	
-	//public void setFirst(Double first) {
-	public void setUsername(String username) {
-		//this.first = first;
-		this.username=username;
-	}
+	// login name - test version  *** got from Prof Hake***
+		public boolean validUsername(String username) {
+			return creds.containsKey(username);
+		}
 	
-	//public double getFirst() {
-	public String getUsername() {
-		//return first;
-		return username;
+	public boolean validCreds(String username, String password) {
+		if (creds.containsKey(username)) {
+			if  (creds.get(username).equals(password)) {
+				return true;
+			}
+		}			
+		return false;
 	}
-	
-	//public void setSecond(Double second) {
-	public void setPassword(String password) {
-		//this.second = second;
-		this.password = password;
-	}
-	
-	//public double getSecond() {
-	public String getPassword() {
-		//return second;
-		return password;
-	}
-	
-	/*public void setThird(Double third) {
-		this.third = third;
-	}
-	
-	public double getThird() {
-		return third;
-	}
-	
-	public void setMultResult() {
-		this.multResult = first*second;
-	}
-	
-	public void setAddResult() {
-		this.addResult=first+second+third;
-	}
-	
-	public double getMultResult() {
-		return multResult;
-	}
-	
-	public double getAddResult(){
-		return addResult;
-	}*/
 }

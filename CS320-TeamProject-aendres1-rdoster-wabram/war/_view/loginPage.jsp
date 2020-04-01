@@ -21,20 +21,15 @@
 			<div class="error">${errorMessage}</div>
 		</c:if>
 	
-		<form action="${pageContext.servletContext.contextPath}/loginPage" method="login">
+		<form action="${pageContext.servletContext.contextPath}/loginPage" method="post">
 			<table>
 				<tr>
-					<td class="label">User Name:</td>
-					<td><input type="text" name="username" size="12" value="${login.username}" /></td>
+					<td class="label">Username:</td>
+					<td><input type="text" name="username" size="12" value="${username}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Password:</td>
-					<td><input type="text" name="password" size="12" value="${login.password}" /></td>
-				</tr>
-				
-				<tr>
-					<td class="label">Result:</td>
-					<td>${login.resultMessage}</td>
+					<td><input type="text" name="password" size="12" value="${password}" /></td>
 				</tr>
 			</table>
 			<input type="Submit" name="submit" value="Login">

@@ -3,26 +3,17 @@ package edu.ycp.cs320.lab02a_wabram.controller;
 import edu.ycp.cs320.lab02a_wabram.model.LoginPage;
 
 public class LoginPageController {
-	//private Numbers model;
-	private LoginPage model;
-	//public void setModel(Numbers model) {
-	public void setModel(LoginPage model) {
-	//this.model = model;
+	private LoginPage model = null;
+	
+	public LoginPageController(LoginPage model) {
 		this.model = model;
 	}
-	/*public Double multiply(Double first, Double second) {
-		
-		model.setFirst(first);
-		model.setSecond(second);
-		model.setMultResult();
-		return model.getMultResult();
+	
+	public boolean checkUserName(String username) {
+		return model.validUsername(username);
 	}
-	public Double add(Double first, Double second, Double third) {
-		
-		model.setFirst(first);
-		model.setSecond(second);
-		model.setThird(third);
-		model.setAddResult();
-		return model.getAddResult();
-	}*/
+	
+	public boolean validCreds(String username, String password) {
+		return model.validCreds(username, password);
+	}
 }
