@@ -3,29 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <html>
-<style type="text/css">
-.error {
-	color: red;
-}
 
-table.chessboard {
-	margin: 80px auto;
-	background: #999;
-	border: 5px solid #333;
-	border-collapse: separate; /* */
-}
-
-td.chessboard {
-	width: 70px;
-	height: 70px;
-	border: 1px solid #333; /* */
-}
-
-tr.chessboard:nth-child(odd) td.chessboard:nth-child(even), tr.chessboard:nth-child(even) td.chessboard:nth-child(odd)
-	{
-	background: white;
-}
-</style>
 <head>
 <title>Board Page</title>
 

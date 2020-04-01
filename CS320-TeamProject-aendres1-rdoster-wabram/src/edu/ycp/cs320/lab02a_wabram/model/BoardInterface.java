@@ -14,7 +14,7 @@ import edu.ycp.cs320.lab02a_wabram.model.Position;
 import edu.ycp.cs320.lab02a_wabram.model.Queen;
 import edu.ycp.cs320.lab02a_wabram.model.Rook;
 
-public class Interface {
+public class BoardInterface {
 
 	final static int boardHeight = 500;
 

@@ -15,6 +15,9 @@ public class King extends Piece {
 	}
 	
 	public boolean validateCastle() {
+		/* make sure there are no pieces between king and rook, 
+		 * and that neither piece has moved yet. 
+		 */
 		return false;
 	}
 }
