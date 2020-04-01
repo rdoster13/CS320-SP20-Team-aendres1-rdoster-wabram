@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <html>
-<head>
-<title>Board Page</title>
 <style type="text/css">
 .error {
 	color: red;
@@ -23,20 +21,24 @@ td.chessboard {
 	border: 1px solid #333; /* */
 }
 
-tr.chessboard:nth-child(odd) td.chessboard:nth-child(even), 
-tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
+tr.chessboard:nth-child(odd) td.chessboard:nth-child(even), tr.chessboard:nth-child(even) td.chessboard:nth-child(odd)
+	{
 	background: white;
 }
 </style>
+<head>
+<title>Board Page</title>
+
 </head>
 
 <body>
+
 	<c:if test="${! empty errorMessage}">
 		<div class="error">${errorMessage}</div>
 	</c:if>
 
 	<form action="${pageContext.servletContext.contextPath}/boardPage"
-		method="Play Chess">
+		method="post">
 
 		<table class="chessboard">
 			<tr class="chessboard">
@@ -120,7 +122,7 @@ tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
 				<td class="chessboard">Rook</td>
 			</tr>
 		</table>
-		<input type="Submit" name="submit" value="Login">
+		<input type="Submit" name="submit" value="play">
 	</form>
 </body>
 </html>

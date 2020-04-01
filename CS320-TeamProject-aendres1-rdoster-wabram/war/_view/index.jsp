@@ -6,24 +6,7 @@
 	</head>
 
 	<body>
-		This is the index view jsp</td>
-		<br/> <br/>
-		<form action="${pageContext.servletContext.contextPath}/addNumbers" method="post">
-			<input type="Submit" name="submit" value="Add Numbers!">
-		</form>
-		
-		<br/><br/>
-		
-		<form action="${pageContext.servletContext.contextPath}/multiplyNumbers" method="post">
-			<input type="Submit" name="submit" value="Multiply Numbers!">
-		</form>
-		
-		<br/><br/>
-		
-		<form action="${pageContext.servletContext.contextPath}/guessingGame" method="Start game">
-			<input type="Submit" name="submit" value="Guessing Game!">
-		</form>
-		
+		<td> This is the index view jsp </td>
 		<br/><br/>
 		
 		<form action="${pageContext.servletContext.contextPath}/loginPage" method="login">
@@ -32,9 +15,10 @@
 		
 		<br/><br/>
 		
-		<form action="${pageContext.servletContext.contextPath}/boardPage" method="Play Chess">
+		<form action="${pageContext.servletContext.contextPath}/boardPage" method="play">
 			<input type="Submit" name="submit" value="Play Chess">
 		</form>
+		
 	</body>
 	
 </html>
