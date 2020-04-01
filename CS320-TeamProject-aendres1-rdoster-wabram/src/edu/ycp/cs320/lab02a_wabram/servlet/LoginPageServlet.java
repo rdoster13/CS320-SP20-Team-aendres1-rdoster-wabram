@@ -36,7 +36,8 @@ public class LoginPageServlet extends HttpServlet {
 		String password = null;
 		boolean validLogin = false;
 		
-		System.out.println("Test: I reach this spot in the code.");
+		//for testing
+		//System.out.println("Test: I reach this spot in the code.");
 		
 		// Decode form parameters and dispatch to controller
 		username = req.getParameter("username");
