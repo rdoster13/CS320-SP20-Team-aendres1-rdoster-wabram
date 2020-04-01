@@ -20,12 +20,13 @@
 
 	<body>
 		<br>
-			<table>
-				<tr>
-					<td class="label">Home Page</td>
-				</tr>
-			</table>
-		
+			<form action="${pageContext.servletContext.contextPath}/homepage" method="post">
+				<table>
+					<tr>
+						<td class="label">Home Page</td>
+					</tr>
+				</table>
+			</form>		
 		<br>
 	</body>
 </html>
