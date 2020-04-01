@@ -4,6 +4,7 @@ import java.awt.List;
 
 public class Piece {
     private Piece piece; 
+    private PieceType type;
     private boolean color;
     private int[][] position;
     
@@ -25,6 +26,10 @@ public class Piece {
     public void setPiece(Piece p) 
     { 
         this.piece = p; 
+    }
+    
+    public PieceType getPieceType() {
+    	return type;
     }
 
 	public boolean isWhite() {
