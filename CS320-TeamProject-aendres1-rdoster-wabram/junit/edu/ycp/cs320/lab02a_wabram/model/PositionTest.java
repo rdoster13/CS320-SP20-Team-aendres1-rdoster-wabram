@@ -29,7 +29,7 @@ public class PositionTest {
 	@Test
 	public void testSetLocation() {
 		model.setPosition(pawn.getPosition());
-		assertEquals(new Point(4,0), model.getPostition());
+		assertEquals(new Point(5,0), model.getPostition());
 	}
 
 }

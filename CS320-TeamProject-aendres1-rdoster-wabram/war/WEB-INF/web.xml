@@ -27,8 +27,8 @@
     <servlet-class>edu.ycp.cs320.lab02a_wabram.servlet.LoginPageServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>BoardPageServelet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab02a_wabram.servlet.BoardPageServelet</servlet-class>
+    <servlet-name>GamePageServelet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02a_wabram.servlet.GamePageServelet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>HomepageServlet</servlet-name>
@@ -67,8 +67,8 @@
     <url-pattern>/loginPage</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>BoardPageServelet</servlet-name>
-    <url-pattern>/boardPage</url-pattern>
+    <servlet-name>GamePageServelet</servlet-name>
+    <url-pattern>/chessPage</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>HomepageServlet</servlet-name>

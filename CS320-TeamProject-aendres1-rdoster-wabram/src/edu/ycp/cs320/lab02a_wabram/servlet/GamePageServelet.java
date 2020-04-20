@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.lab02a_wabram.controller.GameController;
 import edu.ycp.cs320.lab02a_wabram.model.*;
 
-public class BoardPageServelet extends HttpServlet {
+public class GamePageServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Player p1;
 	private Player p2;
