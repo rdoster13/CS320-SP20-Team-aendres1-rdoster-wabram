@@ -1,46 +1,32 @@
 package edu.ycp.cs320.lab02a_wabram.model;
 
+import java.awt.Point;
+
 public class Position {
-	private int col;
-	private int row;
 	private Piece piece;
+	private Point position;
 
-	// constructor needed to initialize board
-	public Position(int col, int row, Piece piece) {
-		this.setCol(col);
-		this.setRow(row);
-		this.setPiece(piece);
+	// This will be for the position and the type of the pieces. 
+	
+	public Position(Piece piece, Point position) {
+		this.piece = piece;
+		this.position = position;
 	}
-
-	public int getCol() {
-		return this.col;
-	}
-
-	public void setCol(int col) {
-		this.col = col;
-	}
-
-	public int getRow() {
-		return this.row;
-	}
-
-	public void setRow(int row) {
-		this.row = row;
-	}
+	
 
 	public Piece getPiece() {
-		return piece;
+		return this.piece;
 	}
-
-	public boolean hasPiece() {
-		if (piece.getPieceType() == PieceType.EMPTY_SPACE) {
-			return false;
-		}
-
-		return true;
+	
+	public void setPiece(Piece newPiece) {
+		this.piece = newPiece;
 	}
-
-	public void setPiece(Piece piece) {
-		this.piece = piece;
+	
+	public Point getPostition() {
+		return position;
+	}
+	
+	public void setPosition(Point position) {
+		this.position = position;
 	}
 }
