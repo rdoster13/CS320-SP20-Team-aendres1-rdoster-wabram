@@ -1,55 +1,47 @@
 package edu.ycp.cs320.lab02a_wabram.model;
 
-import java.awt.List;
+import java.awt.Point;
 
 public class Piece {
-    private Piece piece; 
-    private PieceType type;
-    private boolean color;
-    private int[][] position;
-    
-	/* attributes:
-	 * piece type: string
-	 * player color: bool
-	 * piece location: in (row, column)
-	 * 	 * 
-	 * methods:
-	 * validateMove(): bool
-	 * findMoves(): obj (int, int)
-	 * updatePosition: (int, int)
-	 */
-	public Piece getPiece() 
-    { 
-        return this.piece; 
-    } 
-  
-    public void setPiece(Piece p) 
-    { 
-        this.piece = p; 
-    }
-    
-    public PieceType getPieceType() {
-    	return type;
-    }
+	protected PieceType type;
+	
+	// 0 for white and 1 for black
+	private int color;
+	
+	protected Point position;
 
-	public boolean isWhite() {
-		if (color == false) {
-			return true;
-		} else {
-			return false;
-		}
+	public Piece(PieceType type, Point point, int i) {
+		this.type = type;
+		this.position = point;
+		this.color = i;
 	}
 
-	public void setWhite(boolean color) {
+	public PieceType getPieceType() {
+		return type;
+	}
+
+	public void setPieceType(PieceType type) {
+		this.type = type;
+	}
+
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
 		this.color = color;
 	}
 
-	public int[][] getPosition() {
+	public Point getPosition() {
 		return position;
 	}
 
-	public void setPosition(int[][] position) {
+	public void setPosition(Point position) {
 		this.position = position;
+	}
+
+	public boolean checkMove(Point point, Board board) {
+		return true;
 	}
 
 }
