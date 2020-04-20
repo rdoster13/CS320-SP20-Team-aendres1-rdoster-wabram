@@ -30,15 +30,21 @@
 	<form name="requestForm" method="post">
 		<input type="hidden" name="x1">
 		<input type="hidden" name="y1">
-		
+		<div class='space'>
 		<table class="board">
 			<% for (int y = 0; y < 8; y++ ) { %>
 			<tr>
 				<% for (int x = 0; x < 8; x++) { %>
 				<td onclick="transferCallToServlet(<%=x%> , <%=y%>)" class="test<%=(x+y)%2 %>">
 					<% if (model.getBoard().getPosition(x, y).getPiece() != null) {
-						
 						String type = null;
+						
+						String color = null;
+						if (model.getBoard().getPiece(x, y).getColor() == 1) {
+							color = "Black";
+						} else {
+							color = "White";
+						}
 						switch(model.getBoard().getPiece(x, y).getPieceType()){
 							case PAWN:
 								type = "Pawn";
@@ -59,13 +65,6 @@
 								type = "Queen";
 						}
 						
-						String color = null;
-						if (model.getBoard().getPiece(x, y).getColor() == 1) {
-							color = "Black";
-						} else {
-							color = "White";
-						}
-						
 						String source = "images/" + color + type + ".png";  %>
 						<img src=<%= source %> alt=" images/BlackPawn.png">
 					 <% } %>
@@ -75,6 +74,7 @@
 			<% } %> 
 		</table> 
 		</div>
+		</input>
 		</form>
 	</body> 
 </html>
