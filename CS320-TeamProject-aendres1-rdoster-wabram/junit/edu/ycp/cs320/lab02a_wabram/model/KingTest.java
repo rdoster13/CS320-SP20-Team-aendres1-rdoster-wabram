@@ -23,7 +23,7 @@ public class KingTest {
 	
 	@Test
 	public void TestGetPieceType() {
-		assertEquals(testKing.getPieceType(), PieceType.PAWN);
+		assertEquals(testKing.getPieceType(), PieceType.KING);
 	}
 	
 	@Test
