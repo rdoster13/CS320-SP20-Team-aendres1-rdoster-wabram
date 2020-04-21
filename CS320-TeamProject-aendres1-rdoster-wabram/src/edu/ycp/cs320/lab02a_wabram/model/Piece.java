@@ -2,11 +2,11 @@ package edu.ycp.cs320.lab02a_wabram.model;
 
 import java.awt.Point;
 
-public class Piece {
+public abstract class Piece {
 	protected PieceType type;
 	
 	// 0 for white and 1 for black
-	private int color;
+	protected int color;
 	
 	protected Point position;
 
@@ -40,8 +40,7 @@ public class Piece {
 		this.position = position;
 	}
 
-	public boolean checkMove(Point point, Board board) {
-		return true;
-	}
+	// each piece checks its own moves
+	abstract boolean checkMove(Point point, Board board);
 
 }
