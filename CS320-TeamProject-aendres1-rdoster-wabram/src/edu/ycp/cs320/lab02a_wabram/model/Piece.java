@@ -41,6 +41,5 @@ public abstract class Piece {
 	}
 
 	// each piece checks its own moves
-	abstract boolean checkMove(Point point, Board board);
-
+	public abstract boolean checkMove(Point point, Board board);
 }
