@@ -7,5 +7,11 @@ public class Bishop extends Piece {
 	public Bishop(PieceType type, Point position, int color) {
 		super(type, position, color);
 	}
+
+	@Override
+	boolean checkMove(Point point, Board board) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

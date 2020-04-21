@@ -1,0 +1,31 @@
+td{
+	width: 70px;
+	height: 70px;
+	border-style: dashed;
+}
+
+td:hover{
+	width: 70px;
+	height: 70px;
+	border-style: solid;
+	background:yellow;
+}
+
+tr{
+	width: 70px;
+	height: 70px;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+}
+
+.space{
+	width:900px;
+	height:900px;
+	position: fixed; 
+	/* background-color: #00FF00; */
+	top: 100px;
+	left: 30%;
+}

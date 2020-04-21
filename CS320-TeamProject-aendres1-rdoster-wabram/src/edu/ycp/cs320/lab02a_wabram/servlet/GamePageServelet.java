@@ -12,18 +12,26 @@ import edu.ycp.cs320.lab02a_wabram.controller.GameController;
 import edu.ycp.cs320.lab02a_wabram.model.*;
 
 public class GamePageServelet extends HttpServlet {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+	
+	// Add players to initiate the game
 	private Player p1;
 	private Player p2;
 	Game game = new Game(p1, p2);
 
 	GameController controller = new GameController(game);
 
-	Boolean pos1Recieved = false;
-	int sourceX;
-	int sourceY;
-	int destX;
-	int destY;
+	// Variables to store move states
+	Boolean turnStart = false;
+	
+	// Starting X and Y coordinates
+	int startX;
+	int startY;
+	int endX;
+	int endY;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,26 +42,30 @@ public class GamePageServelet extends HttpServlet {
 		req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 	}
 
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		System.out.println("GamePage Servlet: doPost");
 
-		if (req.getParameter("x1") != null && pos1Recieved == false) {
-			pos1Recieved = true;
-			System.out.println("Recieved Source");
+		// Fetching the starting X value from the Model / JSP for when a piece / position on board is selected
+		if (req.getParameter("x1") != null && turnStart == false) {
+			turnStart = true;
+			System.out.println("Selected Start Square");
 
-			sourceX = Integer.parseInt(req.getParameter("x1"));
-			sourceY = Integer.parseInt(req.getParameter("y1"));
+			// set the starting X and y to the parameters passed in
+			startX = Integer.parseInt(req.getParameter("x1"));
+			startY = Integer.parseInt(req.getParameter("y1"));
 
-			System.err.println("TURN: " + game.getTurn() % 2);
-
-			if (game.getBoard().getPosition(sourceX, sourceY).getPiece() != null) {
-				if (game.getTurn() % 2 != game.getBoard().getPosition(sourceX, sourceY).getPiece().getColor()) {
-					pos1Recieved = false;
+			// check that the space selected has a piece in it AND
+			// that the piece belongs to the correct player based on he turn counter
+			// if not, then do not allow the piece selection
+			if (game.getBoard().getPosition(startX, startY).getPiece() != null) {
+				if (game.getTurn() % 2 != game.getBoard().getPosition(startX, startY).getPiece().getColor()) {
+					turnStart = false;
 				}
 			} else {
-				pos1Recieved = false;
+				turnStart = false;
 			}
 
 			req.setAttribute("model", game);
@@ -61,22 +73,27 @@ public class GamePageServelet extends HttpServlet {
 			req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 		}
 
-		else if (req.getParameter("x1") != null && pos1Recieved == true) {
-			pos1Recieved = false;
-			System.out.println("Recieved Destination");
+		// if the turn has already been started AND
+		// the starting location for X has a piece, then choose the destination for the piece move
+		else if (req.getParameter("x1") != null && turnStart == true) {
+			turnStart = false;
+			System.out.println("Move Destination Chosen");
 
-			destX = Integer.parseInt(req.getParameter("x1"));
-			destY = Integer.parseInt(req.getParameter("y1"));
+			// Passing in the move destination from the Model / JSP
+			endX = Integer.parseInt(req.getParameter("x1"));
+			endY = Integer.parseInt(req.getParameter("y1"));
 
-			if (game.getBoard().getPosition(sourceX, sourceY).getPiece() != null) {
-				if (sourceX == destX && sourceY == destY) {
-					System.out.println("NOT VALID");
+			// verify that the position selected is not the same as the beginning position
+			if (game.getBoard().getPosition(startX, startY).getPiece() != null) {
+				if (startX == endX && startY == endY) {
+					System.out.println("INVALID MOVE");
 				}
 
-				if (game.getBoard().getPosition(sourceX, sourceY).getPiece().checkMove(new Point(destX, destY),
+				// if the move check passes, then update the board
+				if (game.getBoard().getPosition(startX, startY).getPiece().checkMove(new Point(endX, endY),
 						game.getBoard()) == true) {
-					controller.movePiece(game.getBoard().getPosition(sourceX, sourceY),
-							game.getBoard().getPosition(destX, destY));
+					controller.movePiece(game.getBoard().getPosition(startX, startY),
+							game.getBoard().getPosition(endX, endY));
 					game.setTurn(game.getTurn() + 1);
 				} else {
 					System.out.println("INVALID MOVE ");

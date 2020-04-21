@@ -6,7 +6,13 @@
 <html>
 
 <head>
+
 	<title>Chess Game</title>
+	
+	<style type="text/css">
+		<%@include file="/chessPage.css"%>
+	</style>
+	
 	<script>
 		function transferCallToServlet(x,y) {
 			document.requestForm.action = "${pageContext.servletContext.contextPath}/chessPage";
