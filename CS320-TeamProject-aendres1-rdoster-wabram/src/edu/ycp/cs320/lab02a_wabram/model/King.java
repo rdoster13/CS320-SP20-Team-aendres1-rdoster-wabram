@@ -28,7 +28,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	boolean checkMove(Point point, Board board) {
+	public boolean checkMove(Point point, Board board) {
 		// TODO Auto-generated method stub
 		return false;
 	}
