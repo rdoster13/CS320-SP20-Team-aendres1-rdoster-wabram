@@ -8,4 +8,10 @@ public class Rook extends Piece {
 		super(type, position, color);
 	}
 
+	@Override
+	boolean checkMove(Point point, Board board) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
