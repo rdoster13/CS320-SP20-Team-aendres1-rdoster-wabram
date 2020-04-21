@@ -1,6 +1,7 @@
 package edu.ycp.cs320.lab02a_wabram.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,7 +51,12 @@ public class LoginPageServlet extends HttpServlet {
 		} else {
 			model      = new LoginPage();
 			controller = new LoginPageController(model);
-			validLogin = controller.validCreds(username, password);
+			try {
+				validLogin = controller.validCreds(username, password);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			if (!validLogin) {
 				errorMessage = "Username and/or password invalid";

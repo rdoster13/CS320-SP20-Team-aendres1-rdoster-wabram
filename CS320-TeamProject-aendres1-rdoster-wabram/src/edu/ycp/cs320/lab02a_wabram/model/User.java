@@ -1,6 +1,7 @@
 package edu.ycp.cs320.lab02a_wabram.model;
 
 public class User {
+	private int userId;
 	private String username;
 	private String password;
 	private String email;
@@ -9,6 +10,13 @@ public class User {
 	private int losses;
 	private int draws;
 	
+	public int getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(Integer userId) {
+		this.userId= userId;
+	}
 	
 	public String getUsername() {
 		return username;
