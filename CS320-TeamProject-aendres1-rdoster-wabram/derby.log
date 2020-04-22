@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Tue Apr 21 23:29:03 EDT 2020:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0171-9fee-8b5b-000006c290c0 
+Wed Apr 22 00:20:28 EDT 2020:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0171-a01d-9fb2-000006d189e8 
 on database directory G:\Shared drives\CS320-Sp20-Team-aendres1-rdoster-wabram\teamDatabase.db with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
 Loaded from file:/C:/Users/robmm/git/CS320-SP20-Team-aendres1-rdoster-wabram/CS320-TeamProject-aendres1-rdoster-wabram/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_181-b13
-user.dir=C:\Users\wabra\git\CS320-SP20-Team-aendres1-rdoster-wabram\CS320-TeamProject-aendres1-rdoster-wabram
+java.runtime.version=1.8.0_251-b08
+user.dir=C:\Users\robmm\git\CS320-SP20-Team-aendres1-rdoster-wabram\CS320-TeamProject-aendres1-rdoster-wabram
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
