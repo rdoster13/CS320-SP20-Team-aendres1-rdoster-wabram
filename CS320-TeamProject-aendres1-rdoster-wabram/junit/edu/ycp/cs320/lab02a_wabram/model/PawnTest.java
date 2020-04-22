@@ -7,6 +7,8 @@ import java.awt.Point;
 import org.junit.Before;
 import org.junit.Test;
 import edu.ycp.cs320.lab02a_wabram.model.Pawn;
+import edu.ycp.cs320.lab02a_wabram.model.Board;
+import edu.ycp.cs320.lab02a_wabram.model.PieceType;
 
 public class PawnTest {
 	private Board board = new Board();
