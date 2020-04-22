@@ -23,13 +23,14 @@ public class LoginPageControllerTest {
 		controller = new LoginPageController(model);		
 	}
 	
-	@Test
+	/*@Test
 	//public void testMultiply() {
 	public void checkUsername() {
 		assertTrue(controller.checkUserName("Bill"));
 		assertTrue(controller.checkUserName("Rob"));
 		assertFalse(controller.checkUserName("Flamingo"));
 	}
+	*/
 	
 	@Test
 	public void checkValidCreds() {

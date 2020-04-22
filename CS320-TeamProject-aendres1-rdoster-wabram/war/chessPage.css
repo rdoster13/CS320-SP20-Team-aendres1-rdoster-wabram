@@ -7,7 +7,6 @@ td{
 td:hover{
 	width: 70px;
 	height: 70px;
-	border-style: solid;
 	background:yellow;
 }
 

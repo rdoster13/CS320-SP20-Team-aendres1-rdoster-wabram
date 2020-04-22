@@ -11,7 +11,7 @@ public class Rook extends Piece {
 	@Override
 	public	boolean checkMove(Point point, Board board) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }
