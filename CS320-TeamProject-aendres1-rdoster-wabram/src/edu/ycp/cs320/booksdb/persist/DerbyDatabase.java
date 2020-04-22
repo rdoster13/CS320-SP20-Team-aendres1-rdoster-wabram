@@ -90,7 +90,7 @@ public class DerbyDatabase implements IDatabase {
 	// conflicts later w/Git
 	private static Connection connect() throws SQLException {
 		Connection conn = DriverManager.getConnection(
-				"jdbc:derby:C:/Users/wabra/Desktop/CS320/Round 2/teamDatabase/teamDatabase.db;create=true");
+				"jdbc:derby:G:/Shared drives/CS320-Sp20-Team-aendres1-rdoster-wabram/teamDatabase.db;create=true");
 
 		// Set autocommit() to false to allow the execution of
 		// multiple queries/statements as part of the same transaction.

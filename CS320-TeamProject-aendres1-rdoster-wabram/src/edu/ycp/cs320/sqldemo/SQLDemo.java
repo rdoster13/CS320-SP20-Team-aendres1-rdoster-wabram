@@ -45,7 +45,7 @@ public class SQLDemo {
 		Connection conn = null;
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-			conn = DriverManager.getConnection("jdbc:derby:C:/Users/wabra/Desktop/CS320/Round 2/teamDatabase/teamDatabase.db;create=true");
+			conn = DriverManager.getConnection("jdbc:derby:G:/Shared drives/CS320-Sp20-Team-aendres1-rdoster-wabram/teamDatabase.db;create=true");
 			conn.setAutoCommit(true);
 	
 			queryLoop(conn);

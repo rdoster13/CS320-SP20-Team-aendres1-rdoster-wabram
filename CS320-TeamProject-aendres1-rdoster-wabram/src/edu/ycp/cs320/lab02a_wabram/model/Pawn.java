@@ -14,7 +14,7 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	boolean checkMove(Point point, Board board) {
+	public	boolean checkMove(Point point, Board board) {
 		// Black pieces move down, White pieces move up
 		// Black == 1, White == 0
 		// Check / validate moves for 1 or 2 spaces
