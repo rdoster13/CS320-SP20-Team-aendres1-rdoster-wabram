@@ -1,8 +1,10 @@
 package edu.ycp.cs320.lab02a_wabram.controller;
 
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.sql.SQLException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +24,7 @@ public class LoginPageControllerTest {
 		model = new LoginPage();
 		controller = new LoginPageController(model);		
 	}
-	
+	/*
 	@Test
 	//public void testMultiply() {
 	public void checkUsername() {
@@ -30,13 +32,13 @@ public class LoginPageControllerTest {
 		assertTrue(controller.checkUserName("Rob"));
 		assertFalse(controller.checkUserName("Flamingo"));
 	}
-	
+	*/
 	@Test
-	public void checkValidCreds() {
-		assertTrue(controller.validCreds("Bill", "Bill"));
-		assertTrue(controller.validCreds("Rob", "Rob"));
-		assertTrue(controller.validCreds("Alina", "Alina"));
-		assertFalse(controller.validCreds("Flamingo", "ProfHakeIsA"));
+	public void checkValidCreds() throws SQLException {
+		assertTrue(controller.validCreds("wabram", "wabram"));
+		assertTrue(controller.validCreds("rdoster", "rdoster"));
+		//assertTrue(controller.validCreds("Alina", "Alina")); 
+		//assertFalse(controller.validCreds("Flamingo", "ProfHakeIsA"));
 	}
 	
 }
