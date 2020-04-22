@@ -38,19 +38,19 @@ public class RookTest {
 
 	@Test
 	public void TestCheckMove() {
-		// Check the diagonal movements 1 space in each direction
+		// Check the movements 1 space in each direction
 		assertTrue(board.getPiece(2, 7).checkMove(new Point(1, 7), board));
 		assertTrue(board.getPiece(2, 7).checkMove(new Point(3, 7), board));
 		assertTrue(board.getPiece(3, 4).checkMove(new Point(3, 5), board));
 		assertTrue(board.getPiece(3, 4).checkMove(new Point(3, 3), board));
 
-		// Check the diagonal movements 2 space in each direction
+		// Check the movements 2 space in each direction
 		assertTrue(board.getPiece(2, 7).checkMove(new Point(0, 7), board));
 		assertTrue(board.getPiece(2, 7).checkMove(new Point(4, 7), board));
 		assertTrue(board.getPiece(3, 4).checkMove(new Point(3, 6), board));
 		assertTrue(board.getPiece(3, 4).checkMove(new Point(3, 2), board));
 
-		// Check the diagonal movements 3 space in each direction
+		// Check the movements 3 space in each direction
 		assertTrue(board.getPiece(3, 4).checkMove(new Point(3, 1), board));
 		assertTrue(board.getPiece(3, 4).checkMove(new Point(3, 7), board));
 		assertTrue(board.getPiece(3, 4).checkMove(new Point(6, 4), board));
