@@ -7,6 +7,10 @@ import java.awt.Point;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.ycp.cs320.lab02a_wabram.model.Board;
+import edu.ycp.cs320.lab02a_wabram.model.Rook;
+import edu.ycp.cs320.lab02a_wabram.model.PieceType;
+
 public class RookTest {
 
 	private Board board = new Board();
@@ -57,8 +61,8 @@ public class RookTest {
 		assertTrue(board.getPiece(3, 4).checkMove(new Point(0, 4), board));
 
 		// Check 1 space move with Piece in the way for Black
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(3, 7), 0));
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(1, 7), 0));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(3, 7), 0));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(1, 7), 0));
 		assertFalse(board.getPiece(2, 7).checkMove(new Point(3, 7), board));
 		assertFalse(board.getPiece(2, 7).checkMove(new Point(1, 7), board));
 
@@ -67,8 +71,8 @@ public class RookTest {
 		board.getPosition(1, 7).setPiece(null);
 
 		// Check 1 space move with Piece in the way for White
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(4, 4), 1));
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(2, 4), 1));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(4, 4), 1));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(2, 4), 1));
 		assertFalse(board.getPiece(3, 4).checkMove(new Point(4, 4), board));
 		assertFalse(board.getPiece(3, 4).checkMove(new Point(2, 4), board));
 
@@ -77,8 +81,8 @@ public class RookTest {
 		board.getPosition(2, 4).setPiece(null);
 
 		// Check 2 space move with Piece in the way for Black
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(4, 7), 0));
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(0, 7), 0));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(4, 7), 0));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(0, 7), 0));
 		assertFalse(board.getPiece(2, 7).checkMove(new Point(4, 7), board));
 		assertFalse(board.getPiece(2, 7).checkMove(new Point(0, 7), board));
 
@@ -87,8 +91,8 @@ public class RookTest {
 		board.getPosition(0, 7).setPiece(null);
 
 		// Check 2 space move with Piece in the way for White
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(3, 2), 1));
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(3, 6), 1));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(3, 2), 1));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(3, 6), 1));
 		assertFalse(board.getPiece(3, 4).checkMove(new Point(3, 2), board));
 		assertFalse(board.getPiece(3, 4).checkMove(new Point(3, 6), board));
 
@@ -97,8 +101,8 @@ public class RookTest {
 		board.getPosition(3, 6).setPiece(null);
 
 		// Check 3 space move with Piece in the way for White
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(6, 4), 1));
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(0, 4), 1));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(6, 4), 1));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(0, 4), 1));
 		assertFalse(board.getPiece(3, 4).checkMove(new Point(6, 4), board));
 		assertFalse(board.getPiece(3, 4).checkMove(new Point(0, 4), board));
 
@@ -107,8 +111,8 @@ public class RookTest {
 		board.getPosition(0, 4).setPiece(null);
 
 		// Check 3 space move with Piece in the way for White
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(3, 7), 1));
-		board.setPiece(new Bishop(PieceType.ROOK, new Point(3, 1), 1));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(3, 7), 1));
+		board.setPiece(new Rook(PieceType.ROOK, new Point(3, 1), 1));
 		assertFalse(board.getPiece(3, 4).checkMove(new Point(3, 7), board));
 		assertFalse(board.getPiece(3, 4).checkMove(new Point(3, 1), board));
 
