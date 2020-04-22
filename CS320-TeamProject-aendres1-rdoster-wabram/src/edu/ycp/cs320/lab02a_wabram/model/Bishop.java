@@ -7,6 +7,7 @@ public class Bishop extends Piece {
 	public Bishop(PieceType type, Point position, int color) {
 		super(type, position, color);
 	}
+	
 
 	@Override
 	public boolean checkMove(Point point, Board board) {
