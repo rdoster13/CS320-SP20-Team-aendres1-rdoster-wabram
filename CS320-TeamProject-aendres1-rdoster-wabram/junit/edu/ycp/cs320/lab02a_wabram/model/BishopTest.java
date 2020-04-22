@@ -7,6 +7,10 @@ import java.awt.Point;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.ycp.cs320.lab02a_wabram.model.Board;
+import edu.ycp.cs320.lab02a_wabram.model.Bishop;
+import edu.ycp.cs320.lab02a_wabram.model.PieceType;
+
 public class BishopTest {
 
 	private Board board = new Board();
