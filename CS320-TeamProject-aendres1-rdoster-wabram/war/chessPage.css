@@ -1,16 +1,16 @@
-td{
+td {
 	width: 70px;
 	height: 70px;
 	border-style: dashed;
 }
 
-td:hover{
+td:hover {
 	width: 70px;
 	height: 70px;
-	background:yellow;
+	background: yellow;
 }
 
-tr{
+tr {
 	width: 70px;
 	height: 70px;
 }
@@ -20,11 +20,18 @@ img {
 	height: 95%;
 }
 
-.space{
-	width:900px;
-	height:900px;
-	position: fixed; 
+.space {
+	width: 900px;
+	height: 900px;
+	position: fixed;
 	/* background-color: #00FF00; */
 	top: 100px;
 	left: 30%;
+}
+
+.error {
+	color: red;
+	width: 70px;
+	height: 70px;
+	text-align: bottom-left;
 }
