@@ -80,7 +80,9 @@
 			<% } %> 
 		</table> 
 		</div>
-		</input>
+		<c:if test="${! empty errorMessage}">
+			<div class="error">${errorMessage}</div>
+		</c:if>
 		</form>
 	</body> 
 </html>

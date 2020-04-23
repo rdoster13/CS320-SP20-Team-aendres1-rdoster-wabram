@@ -23,12 +23,7 @@ public class GameController {
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);
 	}
 
-	public void displayPieceMoves() {
-		throw new UnsupportedOperationException("TODO - implement");
-	}
 	
-	public boolean checkMoveValidity(Position start, Position end) {
-		throw new UnsupportedOperationException("TODO - implement");
-	}
+	
 
 }

@@ -32,12 +32,15 @@ public class GamePageServelet extends HttpServlet {
 	int startY;
 	int endX;
 	int endY;
+	
+	// Error Message Printing
+	String errorMessage = null;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		req.setAttribute("model", game);
-		System.out.println("GamePage Servlet: doGet");
+		System.out.println(" \nGamePage Servlet: doGet");
 
 		req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 	}
@@ -45,13 +48,13 @@ public class GamePageServelet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
 		System.out.println("GamePage Servlet: doPost");
 
 		// Fetching the starting X value from the Model / JSP for when a piece / position on board is selected
 		if (req.getParameter("x1") != null && turnStart == false) {
 			turnStart = true;
-			System.out.println("Selected Start Square");
+			System.out.println("\n Selected Start Square");
 
 			// set the starting X and y to the parameters passed in
 			startX = Integer.parseInt(req.getParameter("x1"));
@@ -86,7 +89,8 @@ public class GamePageServelet extends HttpServlet {
 			// verify that the position selected is not the same as the beginning position
 			if (game.getBoard().getPosition(startX, startY).getPiece() != null) {
 				if (startX == endX && startY == endY) {
-					System.out.println("INVALID MOVE");
+					System.out.println("\n INVALID MOVE");
+					errorMessage = "Invalid Move!";
 				}
 
 				// if the move check passes, then update the board
@@ -96,11 +100,13 @@ public class GamePageServelet extends HttpServlet {
 							game.getBoard().getPosition(endX, endY));
 					game.setTurn(game.getTurn() + 1);
 				} else {
-					System.out.println("INVALID MOVE ");
+					System.out.println("\n INVALID MOVE ");
+					errorMessage = "Invalid Move!";
 				}
 			}
 
 			req.setAttribute("model", game);
+			req.setAttribute("errorMessage", errorMessage);
 			System.out.println("GamePage Servlet: doGet");
 			req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 		}

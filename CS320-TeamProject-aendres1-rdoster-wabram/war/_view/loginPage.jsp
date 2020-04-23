@@ -6,13 +6,7 @@
 	<head>
 		<title>Login Page</title>
 		<style type="text/css">
-		.error {
-			color: red;
-		}
-		
-		td.label {
-			text-align: right;
-		}
+			<%@include file="/loginPage.css"%>
 		</style>
 	</head>
 
