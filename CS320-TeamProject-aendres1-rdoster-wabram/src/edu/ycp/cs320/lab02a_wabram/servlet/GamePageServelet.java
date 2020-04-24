@@ -33,8 +33,6 @@ public class GamePageServelet extends HttpServlet {
 	int endX;
 	int endY;
 	
-	// Error Message Printing
-	String errorMessage = null;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,7 +46,9 @@ public class GamePageServelet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		// Error Message Printing
+		String errorMessage = null;
+							
 		System.out.println("GamePage Servlet: doPost");
 
 		// Fetching the starting X value from the Model / JSP for when a piece / position on board is selected
@@ -70,9 +70,8 @@ public class GamePageServelet extends HttpServlet {
 			} else {
 				turnStart = false;
 			}
-
+		
 			req.setAttribute("model", game);
-
 			req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 		}
 
@@ -99,6 +98,7 @@ public class GamePageServelet extends HttpServlet {
 					controller.movePiece(game.getBoard().getPosition(startX, startY),
 							game.getBoard().getPosition(endX, endY));
 					game.setTurn(game.getTurn() + 1);
+					
 				} else {
 					System.out.println("\n INVALID MOVE ");
 					errorMessage = "Invalid Move!";

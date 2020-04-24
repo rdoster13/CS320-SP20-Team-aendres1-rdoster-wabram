@@ -127,6 +127,11 @@ public class DerbyDatabase implements IDatabase {
 		
 		return found;
 	}
+	
+	// TODO: implement update pieces method
+	public void updatePiecePositions() {
+		
+	}
 
 	/*
 	 * // retrieves Author information from query result set private void

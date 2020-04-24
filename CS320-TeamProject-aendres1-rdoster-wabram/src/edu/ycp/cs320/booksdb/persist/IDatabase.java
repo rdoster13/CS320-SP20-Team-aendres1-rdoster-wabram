@@ -17,4 +17,7 @@ public interface IDatabase {
 	//public List<Author> findAllAuthors();
 	//public List<Author> removeBookByTitle(String title);	
 	//public boolean dbvalidCreds(String username, String password) throws SQLException;
+	
+	// TODO: Implement method to update piece positions
+	public void updatePiecePositions();
 }

@@ -52,6 +52,43 @@ public class InitialData {
 		}
 	}
 	
+public static List<User> getInitPieceLocations() throws IOException{
+		
+		//List<Author> authorList = new ArrayList<Author>();
+		List<User> userList = new ArrayList<User>();
+		//ReadCSV readAuthors = new ReadCSV("authors.csv");
+		ReadCSV readUsers = new ReadCSV("users.csv");
+		try {
+			// auto-generated primary key for authors table
+			Integer userId = 1;
+			while (true) {
+				List<String> tuple = readUsers.next();
+				System.out.println(tuple);
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				//Author author = new Author();
+				User user = new User();
+
+				// read author ID from CSV file, but don't use it
+				// it's there for reference purposes, just make sure that it is correct
+				// when setting up the BookAuthors CSV file				
+				Integer.parseInt(i.next());
+				// auto-generate author ID, instead
+				user.setUserId(userId++);				
+				user.setUsername(i.next());
+				user.setPassword(i.next());
+				System.out.println(user.getUsername() + " " + user.getPassword());
+				userList.add(user);
+			}
+			System.out.println("userList loaded from CSV file");
+			return userList;
+		} finally {
+			readUsers.close();
+		}
+	}
+	
 	// reads initial Book data from CSV file and returns a List of Books
 	/*public static List<Book> getBooks() throws IOException {
 		List<Book> bookList = new ArrayList<Book>();

@@ -28,9 +28,9 @@
 	<form action="${pageContext.servletContext.contextPath}/chessPage" method="post">
 		<% Game model = (Game)request.getAttribute("model"); %>
 
-		<div class='turn'>
-			Chess
-		</div>
+		<Header class='chess'>
+			Play Chess!
+		</Header>
 	</form>
 
 	<form name="requestForm" method="post">
@@ -81,8 +81,12 @@
 		</table> 
 		</div>
 		<c:if test="${! empty errorMessage}">
+			<div class="error">${gameLog}</div>
+		</c:if>
+		
+		</form>
+		<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 		</c:if>
-		</form>
 	</body> 
 </html>
