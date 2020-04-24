@@ -21,17 +21,22 @@ img {
 }
 
 .space {
-	width: 900px;
-	height: 900px;
-	position: fixed;
-	/* background-color: #00FF00; */
-	top: 100px;
-	left: 30%;
+	width: 650px;
+	height: 700px;
+	position: Fixed;
+	background-color: #ff80ff; 
+	/*top: 100px;*/
+	left: 30px;
+	top: 50px
 }
 
 .error {
 	color: red;
-	width: 70px;
-	height: 70px;
-	text-align: bottom-left;
+	Position: center;
+	
+}
+.chess {
+	color: red;
+	position: fixed;
+	left: 310px;
 }

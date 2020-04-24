@@ -42,6 +42,9 @@ public class Pawn extends Piece {
 				// need int Cast as point is a type double
 				board.getPosition((int) point.getX(), (int) point.getY()).getPiece() == null
 				
+				// make sure that the X coordinate does not change when placing piece
+				&& point.getX() == position.getX()
+				
 				// Check that the x coordinate has not changed, but y has increased by 2
 				// Also make sure it is in the starting position (only time a move of 2Y is allowed
 				&& point.getY() == position.getY() + 2 && position.getY() == 1
@@ -53,6 +56,9 @@ public class Pawn extends Piece {
 				// check that the destination position is empty
 				// need int Cast as point is a type double
 				board.getPosition((int) point.getX(), (int) point.getY()).getPiece() == null
+				
+				// make sure that the X coordinate does not change when placing piece
+				&& point.getX() == position.getX()
 				
 				// Check that the x coordinate has not changed, but y has increased by 2
 				// Also make sure it is in the starting position (only time a move of 2Y is allowed
