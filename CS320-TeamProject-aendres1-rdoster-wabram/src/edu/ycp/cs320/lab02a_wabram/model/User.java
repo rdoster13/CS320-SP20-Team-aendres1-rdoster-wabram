@@ -9,7 +9,14 @@ public class User {
 	private int wins;
 	private int losses;
 	private int draws;
+	private int gameturn;
 	
+	public int getgameTurn() {
+		return gameturn;
+	}
+	public void setgameTurn(Integer gameturn) {
+		this.gameturn=gameturn;
+	}
 	public int getUserId() {
 		return userId;
 	}

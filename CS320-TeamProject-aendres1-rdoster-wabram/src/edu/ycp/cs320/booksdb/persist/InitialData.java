@@ -42,7 +42,8 @@ public class InitialData {
 				user.setUserId(userId++);				
 				user.setUsername(i.next());
 				user.setPassword(i.next());
-				System.out.println(user.getUsername() + " " + user.getPassword());
+				user.setgameTurn(Integer.parseInt(i.next()));
+				System.out.println(user.getUsername() + " " + user.getPassword() + " " + user.getgameTurn());
 				userList.add(user);
 			}
 			System.out.println("userList loaded from CSV file");
