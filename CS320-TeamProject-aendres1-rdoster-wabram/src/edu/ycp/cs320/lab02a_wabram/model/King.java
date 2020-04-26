@@ -39,7 +39,7 @@ public class King extends Piece {
 		}
 		// Check that the king can only move one space in either direction. 
 		// if either the X or Y coordinate is more that one from the current position, invalid. 
-		if (point.x - position.x > 1 || point.y - position.y > 1) {
+		if (point.x - position.x > 1 ||point.x - position.x < -1 || point.y - position.y > 1 || point.y - position.y < -1) {
 			return false;
 		}
 		return true;
