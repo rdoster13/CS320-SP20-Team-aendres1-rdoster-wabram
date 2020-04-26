@@ -80,28 +80,41 @@ public class InitialData {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
+				int piece_ID = Integer.parseInt(i.next());
 				int color= Integer.parseInt(i.next()) ;
 				int typeEnum = Integer.parseInt(i.next());
 				PieceType type= PieceType.PAWN;
 				//PieceType type= ;
 				int y= Integer.parseInt(i.next());
 				int x= Integer.parseInt(i.next());
-				Point position ;
+				Point position = new Point(x, y) ;
+				Piece piece = null;
 				
-				Piece piece= new Piece(type, position, color);
+				if (typeEnum == 0) {
+					piece= new Pawn(type, position, color);
+				} else if (typeEnum == 1) {
+					piece= new Rook(type, position, color);
+				} else if (typeEnum == 2) {
+					piece= new Knight(type, position, color);
+				} else if (typeEnum == 3) {
+					piece= new Bishop(type, position, color);
+				} else if (typeEnum == 4) {
+					piece= new Queen(type, position, color);
+				} else if (typeEnum == 5) {
+					piece= new King(type, position, color);
+				}
 
 				// read author ID from CSV file, but don't use it
 				// it's there for reference purposes, just make sure that it is correct
 				// when setting up the BookAuthors CSV file
-				Integer.parseInt(i.next());
 				// auto-generate author ID, instead
-				piece.setPiece_ID(Integer.parseInt(i.next()));
+				
+				piece.setPiece_ID(piece_ID++);
 				piece.setColor(color);
 				piece.setType(type.getPieceType());
 				piece.setY(y);
 				piece.setX(x);
-				piece.setMovesMade(Integer.parseInt(i.next()));
-				System.out.println(piece.getColor() + " " + piece.getType() + " " + piece.getY() + " " + piece.getX() + " " + piece.getMovesMade());
+				System.out.println(piece.getPiece_ID() + " " + piece.getColor() + " " + piece.getType() + " " + piece.getY() + " " + piece.getX());
 				piecesList.add(piece);
 			}
 			System.out.println("Pieces loaded from CSV file");
