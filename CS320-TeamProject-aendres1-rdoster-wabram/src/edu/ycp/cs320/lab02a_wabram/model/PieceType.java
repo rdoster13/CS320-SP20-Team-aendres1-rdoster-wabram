@@ -25,9 +25,11 @@ public enum PieceType {
 	private PieceType(int type) {
 		this.type = type;
 	}
-	
+	public void setPieceType( int type) {
+		this.type=type;
+	}
 	public int getPieceType() {
 		return this.type;
 	}
-		
+			
 }

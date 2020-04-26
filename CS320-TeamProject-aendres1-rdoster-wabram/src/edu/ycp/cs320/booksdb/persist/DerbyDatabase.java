@@ -10,13 +10,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import edu.ycp.cs320.lab02a_wabram.model.Game;
 //import edu.ycp.cs320.booksdb.persist.DerbyDatabase.Transaction;
 //import edu.ycp.cs320.booksdb.model.Author;
 //import edu.ycp.cs320.booksdb.model.Book;
 //import edu.ycp.cs320.booksdb.model.BookAuthor;
 //import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.lab02a_wabram.model.LoginPage;
+import edu.ycp.cs320.lab02a_wabram.model.Piece;
 import edu.ycp.cs320.lab02a_wabram.model.User;
 
 //used from Prof Hake library example 
@@ -139,6 +140,7 @@ public class DerbyDatabase implements IDatabase {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
 
 				try {
 					stmt1 = conn.prepareStatement("create table usercreds (" 
@@ -150,7 +152,23 @@ public class DerbyDatabase implements IDatabase {
 							+ ")"
 					);
 					stmt1.executeUpdate();
-
+					
+					System.out.println("Usercreds table created");
+					
+					stmt2 = conn.prepareStatement(
+							"create table pieces (" +
+							"	piece_id integer primary key " +
+							"		generated always as identity (start with 1, increment by 1), " + 
+							"	color integer," +
+							"	type integer," +
+							"   row integer," +
+							"   col integer" +
+							")"
+					);
+					stmt2.executeUpdate();
+					
+					System.out.println("Pieces table created");
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
@@ -164,18 +182,23 @@ public class DerbyDatabase implements IDatabase {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				List<User> userList;
-
+				List<Piece> pieceList;
+				
 				try {
 					userList = InitialData.getUserCreds();
+					pieceList= InitialData.getPieces();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
 				PreparedStatement insertUser = null;
+				PreparedStatement insertGame = null;
 
 				try {
 					
-					insertUser = conn.prepareStatement("insert into usercreds (username, password, gameturn) values (?, ?, ?)");
+					insertUser = conn.prepareStatement(""
+							+ "insert into usercreds (username, password, gameturn) values (?, ?, ?)");
+					
 					for (User user : userList) {
 						
 						insertUser.setString(1, user.getUsername());
@@ -185,10 +208,22 @@ public class DerbyDatabase implements IDatabase {
 					}
 					insertUser.executeBatch();
 					
+					insertGame= conn.prepareStatement(""
+							+ "insert into game (color, type, row, col) values(?, ?, ?, ?)");
+					for (Piece pieces : pieceList) {
+						insertGame.setInt(1, pieces.getColor());
+						insertGame.setInt(2, pieces.getType());
+						insertGame.setInt(3, (int) pieces.getPosition().getY());
+						insertGame.setInt(4, (int) pieces.getPosition().getX());
+						insertGame.addBatch();
+					}
+					insertUser.executeBatch();
+					
 					return true;
 				} finally {
 					
 					DBUtil.closeQuietly(insertUser);
+					DBUtil.closeQuietly(insertGame);
 				}
 			}
 		});
