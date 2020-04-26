@@ -83,24 +83,30 @@ public class InitialData {
 				int piece_ID = Integer.parseInt(i.next());
 				int color= Integer.parseInt(i.next()) ;
 				int typeEnum = Integer.parseInt(i.next());
-				PieceType type= PieceType.PAWN;
 				//PieceType type= ;
 				int y= Integer.parseInt(i.next());
 				int x= Integer.parseInt(i.next());
 				Point position = new Point(x, y) ;
 				Piece piece = null;
 				
+				PieceType type = null;
 				if (typeEnum == 0) {
+					type = PieceType.PAWN;
 					piece= new Pawn(type, position, color);
 				} else if (typeEnum == 1) {
+					type = PieceType.ROOK;
 					piece= new Rook(type, position, color);
 				} else if (typeEnum == 2) {
+					type = PieceType.KNIGHT;
 					piece= new Knight(type, position, color);
 				} else if (typeEnum == 3) {
+					type = PieceType.BISHOP;
 					piece= new Bishop(type, position, color);
 				} else if (typeEnum == 4) {
+					type = PieceType.QUEEN;
 					piece= new Queen(type, position, color);
 				} else if (typeEnum == 5) {
+					type = PieceType.KING;
 					piece= new King(type, position, color);
 				}
 
