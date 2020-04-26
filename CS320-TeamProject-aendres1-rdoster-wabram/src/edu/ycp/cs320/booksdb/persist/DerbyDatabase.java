@@ -209,7 +209,7 @@ public class DerbyDatabase implements IDatabase {
 					insertUser.executeBatch();
 					
 					insertGame= conn.prepareStatement(""
-							+ "insert into game (color, type, row, col) values(?, ?, ?, ?)");
+							+ "insert into pieces (color, type, row, col) values(?, ?, ?, ?)");
 					for (Piece pieces : pieceList) {
 						insertGame.setInt(1, pieces.getColor());
 						insertGame.setInt(2, pieces.getType());
