@@ -15,6 +15,11 @@ public abstract class Piece {
 	private int piece_id;
 	
 	
+	public Piece(PieceType type, Point point, int color) {
+		this.type = type;
+		this.position = point;
+		this.color = color;
+	}
 	
 	public int getPiece_ID() {
 		return piece_id;
@@ -45,12 +50,6 @@ public abstract class Piece {
         this.typeInt = type.getPieceType();
     }
 	
-	public Piece(PieceType type, Point point, int color) {
-		this.type = type;
-		this.position = point;
-		this.color = color;
-	}
-
 
 	public PieceType getPieceType() {
 		return type;
@@ -83,9 +82,12 @@ public abstract class Piece {
 	public void setMovesMade(int movesMade) {
 		this.movesMade= movesMade;
 	}
+	
 	// each piece checks its own moves
 	public abstract boolean checkMove(Point point, Board board);
-
+	
+	public abstract boolean checkOppCheck(Point kingSpace, Board board);
+	
 }
 	
 	

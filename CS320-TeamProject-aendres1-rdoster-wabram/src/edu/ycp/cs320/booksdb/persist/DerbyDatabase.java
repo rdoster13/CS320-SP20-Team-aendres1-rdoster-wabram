@@ -130,7 +130,8 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	// TODO: implement update pieces method
-	public void updatePiecePositions() {
+	public static void updatePieceLocation(int startX, int startY, int endX, int endY) {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -238,6 +239,8 @@ public class DerbyDatabase implements IDatabase {
 	 System.out.println("Loading initial data..."); db.loadInitialData();
 	 
 	 System.out.println("Library DB successfully initialized!"); }
+
+	
 	 
 
 }

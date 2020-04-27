@@ -8,12 +8,17 @@ public class Bishop extends Piece {
 		super(type, position, color);
 	}
 	
-
+	//TODO: need to add if piece is off board after extending ( >7 in either X or Y)
 	@Override
 	public boolean checkMove(Point point, Board board) {
 
 		// Check that the destination is not the same as the starting space
 		if (position.x == point.x && position.y == point.y) {
+			return false;
+		}
+		
+		// check if piece is off board after extending ( >7 in either X or Y)
+		if (point.x > 7 || point.y > 7) {
 			return false;
 		}
 
@@ -31,6 +36,7 @@ public class Bishop extends Piece {
 				return false;
 			}
 		}
+		
 
 		// Check each of the directions using the loop because
 		// the bishop can move any number of spaces (as long as it is not blocked)
@@ -63,8 +69,18 @@ public class Bishop extends Piece {
 					return false;
 				}
 			}
+			
+			// checks that it does not expose the king
+			// Calls checkOppCheck to make sure your king isn't in check
+			// if your king is in check, return false
 		}
 		return true;
+	}
+
+
+	@Override
+	public boolean checkOppCheck(Point kingSpace, Board board) {
+		return false;
 	}
 
 }
