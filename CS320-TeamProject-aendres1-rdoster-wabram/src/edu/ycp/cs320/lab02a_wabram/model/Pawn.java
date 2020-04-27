@@ -14,77 +14,86 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public	boolean checkMove(Point point, Board board) {
+	public boolean checkMove(Point point, Board board) {
 		// Black pieces move down, White pieces move up
 		// Black == 1, White == 0
 		// Check / validate moves for 1 or 2 spaces
 		// Check for taking piece, but only diagonally
 
-		if (color == 1 && 
-				// check that the destination position is empty
-				// need int Cast as point is a type double
+		// check if piece is off board after extending ( >7 in either X or Y)
+		if (point.x > 7 || point.x < 0 || point.y > 7 || point.y < 7) {
+			return false;
+		}
+
+		if (color == 1 &&
+		// check that the destination position is empty
+		// need int Cast as point is a type double
 				board.getPosition((int) point.getX(), (int) point.getY()).getPiece() == null
-				
+
 				// Check that the x coordinate has not changed, but y has increased by 1
 				&& point.getY() == position.getY() + 1 && point.x == position.x) {
 			return true;
-		} else if (color == 0 
-				
+		} else if (color == 0
+
 				// check that the destination position is empty
 				// need int Cast as point is a type double
 				&& board.getPosition((int) point.getX(), (int) point.getY()).getPiece() == null
-				
+
 				// Check that the x coordinate has not changed, but y has increased by 1
 				&& point.getY() == position.getY() - 1 && point.x == position.x) {
 			return true;
-		} else if (color == 1 && 
-				// check that the destination position is empty
-				// need int Cast as point is a type double
+		} else if (color == 1 &&
+		// check that the destination position is empty
+		// need int Cast as point is a type double
 				board.getPosition((int) point.getX(), (int) point.getY()).getPiece() == null
-				
+
 				// make sure that the X coordinate does not change when placing piece
 				&& point.getX() == position.getX()
-				
+
 				// Check that the x coordinate has not changed, but y has increased by 2
-				// Also make sure it is in the starting position (only time a move of 2Y is allowed
+				// Also make sure it is in the starting position (only time a move of 2Y is
+				// allowed
 				&& point.getY() == position.getY() + 2 && position.getY() == 1
-				
-				// Make sure that the space being skipped over is empty as well 
+
+				// Make sure that the space being skipped over is empty as well
 				&& board.getPosition((int) point.getX(), (int) point.getY() - 1).getPiece() == null) {
 			return true;
-		} else if (color == 0 && 
-				// check that the destination position is empty
-				// need int Cast as point is a type double
+		} else if (color == 0 &&
+		// check that the destination position is empty
+		// need int Cast as point is a type double
 				board.getPosition((int) point.getX(), (int) point.getY()).getPiece() == null
-				
+
 				// make sure that the X coordinate does not change when placing piece
 				&& point.getX() == position.getX()
-				
+
 				// Check that the x coordinate has not changed, but y has increased by 2
-				// Also make sure it is in the starting position (only time a move of 2Y is allowed
+				// Also make sure it is in the starting position (only time a move of 2Y is
+				// allowed
 				&& point.getY() == position.getY() - 2 && position.getY() == 6
-				
-				// Make sure that the space being skipped over is empty as well 
+
+				// Make sure that the space being skipped over is empty as well
 				&& board.getPosition((int) point.getX(), (int) point.getY() + 1).getPiece() == null) {
 			return true;
-		} else if (color == 1 
-				
-				// Make sure that the position the pawn is going to is diagonally upward 
-				// +1 y and +/- 1  x on either side
+		} else if (color == 1
+
+				// Make sure that the position the pawn is going to is diagonally upward
+				// +1 y and +/- 1 x on either side
 				&& (point.x == position.x + 1 || point.x == position.x - 1) && point.y == position.y + 1
-				
-				// make sure there is a piece in the location that the pawn is moving so the piece can be taken.
+
+				// make sure there is a piece in the location that the pawn is moving so the
+				// piece can be taken.
 				&& board.getPosition((int) point.getX(), (int) point.getY()).getPiece() != null) {
 			if (board.getPosition(point.x, point.y).getPiece().getColor() != color) {
 				return true;
 			}
-		} else if (color == 0 
-				
-				// Make sure that the position the pawn is going to is diagonally upward 
-				// +1 y and +/- 1  x on either side
+		} else if (color == 0
+
+				// Make sure that the position the pawn is going to is diagonally upward
+				// +1 y and +/- 1 x on either side
 				&& (point.x == position.x + 1 || point.x == position.x - 1) && point.y == position.y - 1
-				
-				// make sure there is a piece in the location that the pawn is moving so the piece can be taken. 
+
+				// make sure there is a piece in the location that the pawn is moving so the
+				// piece can be taken.
 				&& board.getPosition((int) point.getX(), (int) point.getY()).getPiece() != null) {
 			if (board.getPosition(point.x, point.y).getPiece().getColor() != color) {
 				return true;
@@ -92,6 +101,12 @@ public class Pawn extends Piece {
 				return false;
 			}
 		}
+		return false;
+	}
+
+	@Override
+	public boolean checkOppCheck(Point kingSpace, Board board) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
