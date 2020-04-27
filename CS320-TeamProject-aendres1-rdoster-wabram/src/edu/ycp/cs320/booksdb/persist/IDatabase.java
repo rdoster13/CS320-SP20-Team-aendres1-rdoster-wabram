@@ -19,5 +19,5 @@ public interface IDatabase {
 	//public boolean dbvalidCreds(String username, String password) throws SQLException;
 	
 	// TODO: Implement method to update piece positions
-	public void updatePiecePositions();
+	//public void updatePiecePositions();
 }

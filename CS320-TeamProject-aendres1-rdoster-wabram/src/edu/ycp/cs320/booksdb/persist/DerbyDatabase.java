@@ -129,11 +129,65 @@ public class DerbyDatabase implements IDatabase {
 		return found;
 	}
 	
-	// TODO: implement update pieces method
-	public void updatePiecePositions() {
-		
+	//TODO: implement update turn
+	public void updateTurn(String username, int thisTurn, int nextTurn) {
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(" update usercreds"
+							+ " set (usercreds.turn = ? ) "
+							+ " where (usercreds.username = ? and usercreds.turn = ? )"
+							+ ")"
+					);
+					stmt.setInt(1,nextTurn);
+					stmt.setString(2, username);
+					stmt.setInt(3, thisTurn);
+					
+					stmt.executeUpdate();
+					
+					System.out.println("Turn updated on usercreds table");
+					
+					return true;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
 	}
-
+	
+	// TODO: implement update pieces method
+	public void updatePieceLocation(int xStart, int yStart, int xEnd, int yEnd) {
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				try {
+					stmt = conn.prepareStatement(" update pieces"
+							+ " set (pieces.row = ? and pieces.col = ? ) "
+							+ " where (pieces.row = ? and pieces.col = ? )"
+							+ ")"
+					);
+					stmt.setInt(1,yEnd);
+					stmt.setInt(2, xEnd);
+					stmt.setInt(3, yStart);
+					stmt.setInt(4, xStart);
+					
+					stmt.executeUpdate();
+					
+					System.out.println("Pieces table updated");
+					
+					return true;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
 	
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
@@ -172,6 +226,7 @@ public class DerbyDatabase implements IDatabase {
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
