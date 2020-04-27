@@ -21,7 +21,7 @@ public class Pawn extends Piece {
 		// Check for taking piece, but only diagonally
 
 		// check if piece is off board after extending ( >7 in either X or Y)
-		if (point.x > 7 || point.x < 0 || point.y > 7 || point.y < 7) {
+		if (point.x > 7 || point.x < 0 || point.y > 7 || point.y < 0) {
 			return false;
 		}
 
