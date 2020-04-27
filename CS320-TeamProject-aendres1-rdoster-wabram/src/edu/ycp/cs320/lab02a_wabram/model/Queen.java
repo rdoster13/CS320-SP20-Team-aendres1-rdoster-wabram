@@ -20,9 +20,14 @@ public class Queen extends Piece {
 			}
 		}
 
+		// check if piece is off board after extending ( >7 in either X or Y)
+		if (point.x > 7 || point.x < 0 || point.y > 7 || point.y < 7) {
+			return false;
+		}
+
 		// Check Lateral Movement
 		if (position.y == point.y) {
-			
+
 			// Check Right
 			if (position.x < point.x) {
 				for (int i = position.x + 1; i < point.x; i++) {
@@ -31,20 +36,20 @@ public class Queen extends Piece {
 					}
 				}
 			}
-			
+
 			// Check Left
-			if(position.x > point.x) { 
-				for(int i = point.x+1; i < position.x; i++) {
-					if(board.getPosition(i, point.y).getPiece() != null) {
+			if (position.x > point.x) {
+				for (int i = point.x + 1; i < position.x; i++) {
+					if (board.getPosition(i, point.y).getPiece() != null) {
 						return false;
 					}
 				}
 			}
 			return true;
 
-		// Check Vertical Movement
-		} else if (position.x == point.x) { 
-			
+			// Check Vertical Movement
+		} else if (position.x == point.x) {
+
 			// Check Down
 			if (position.y < point.y) {
 				for (int i = position.y + 1; i < point.y; i++) {
@@ -53,7 +58,7 @@ public class Queen extends Piece {
 					}
 				}
 			}
-			
+
 			// Check Up
 			if (position.y > point.y) {
 				for (int i = point.y + 1; i < position.y; i++) {
@@ -64,7 +69,7 @@ public class Queen extends Piece {
 			}
 			return true;
 		}
-		
+
 		// Check Diagonal Moves
 		// the Queen can move any number of spaces (as long as it is not blocked)
 		if (Math.abs(position.x - point.x) != Math.abs(position.y - point.y)) {
@@ -72,28 +77,28 @@ public class Queen extends Piece {
 		}
 
 		for (int i = 1; i < Math.abs(position.x - point.x); i++) {
-			
+
 			// check going down and to the left
 			if (position.x < point.x && position.y > point.y) {
 				if (board.getPosition(position.x + i, position.y - i).getPiece() != null) { // down, left
 					return false;
 				}
 			}
-			
+
 			// check going down and to the right
 			if (position.x < point.x && position.y < point.y) {
 				if (board.getPosition(position.x + i, position.y + i).getPiece() != null) { // down, right
 					return false;
 				}
 			}
-			
+
 			// check going up and to the left
 			if (position.x > point.x && position.y > point.y) {
 				if (board.getPosition(position.x - i, position.y - i).getPiece() != null) { // up, left
 					return false;
 				}
 			}
-			
+
 			// check going up and to the right
 			if (position.x > point.x && position.y < point.y) {
 				if (board.getPosition(position.x - i, position.y + i).getPiece() != null) { // up, right
@@ -102,5 +107,11 @@ public class Queen extends Piece {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public boolean checkOppCheck(Point kingSpace, Board board) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

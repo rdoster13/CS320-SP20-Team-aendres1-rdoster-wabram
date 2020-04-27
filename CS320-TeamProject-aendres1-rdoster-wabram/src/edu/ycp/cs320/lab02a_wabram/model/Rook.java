@@ -15,6 +15,11 @@ public class Rook extends Piece {
 			return false;
 		}
 
+		// check if piece is off board after extending ( >7 in either X or Y)
+		if (point.x > 7 || point.x < 0 || point.y > 7 || point.y < 7) {
+			return false;
+		}
+
 		// check that the move is not diagonal. if it is, return false
 		if (position.y != point.y && position.x != point.x) {
 			return false;
@@ -39,7 +44,7 @@ public class Rook extends Piece {
 				}
 			}
 		}
-		
+
 		// Check Right
 		if (position.x < point.x) {
 			for (int i = position.x + 1; i < point.x; i++) {
@@ -48,7 +53,7 @@ public class Rook extends Piece {
 				}
 			}
 		}
-		
+
 		// Check Up
 		if (position.y > point.y) {
 			for (int i = point.y + 1; i < position.y; i++) {
@@ -68,6 +73,12 @@ public class Rook extends Piece {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean checkOppCheck(Point kingSpace, Board board) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
