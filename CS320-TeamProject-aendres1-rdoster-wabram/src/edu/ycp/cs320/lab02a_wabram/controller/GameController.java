@@ -1,5 +1,6 @@
 package edu.ycp.cs320.lab02a_wabram.controller;
 
+import edu.ycp.cs320.booksdb.persist.IDatabase;
 import edu.ycp.cs320.lab02a_wabram.model.Game;
 import edu.ycp.cs320.lab02a_wabram.model.Position;
 
@@ -22,6 +23,13 @@ public class GameController {
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece().setPosition(end.getPostition());
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);
 	}
+
+
+	/*public void updatePieceLocation(int startX, int startY, int endX, int endY) {
+		IDatabase.updatePieceLocation(startX, startY, endX, endY);
+		System.out.println("Piece Location updated in piece table");
+	}
+	*/
 
 	
 	
