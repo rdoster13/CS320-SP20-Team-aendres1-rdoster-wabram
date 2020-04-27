@@ -16,8 +16,12 @@ public interface IDatabase {
 	//public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	//public List<Author> findAllAuthors();
 	//public List<Author> removeBookByTitle(String title);	
-	//public boolean dbvalidCreds(String username, String password) throws SQLException;
+	//public static boolean dbvalidCreds(String username, String password) throws SQLException;
 	
 	// TODO: Implement method to update piece positions
-	//public void updatePiecePositions();
+	public static void updatePieceLocation(int xStart, int yStart, int xEnd, int yEnd) {
+	}
+	
+	public static void updateTurn(String username, int thisTurn, int nextTurn) {
+	}
 }

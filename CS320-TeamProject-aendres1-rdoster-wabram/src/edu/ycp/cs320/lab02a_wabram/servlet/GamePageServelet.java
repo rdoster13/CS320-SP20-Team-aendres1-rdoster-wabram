@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
+import edu.ycp.cs320.booksdb.persist.IDatabase;
 import edu.ycp.cs320.lab02a_wabram.controller.GameController;
 import edu.ycp.cs320.lab02a_wabram.model.*;
 
@@ -21,6 +22,7 @@ public class GamePageServelet extends HttpServlet {
 	// Add players to initiate the game
 	private Player p1;
 	private Player p2;
+	private User u1;
 	Game game = new Game(p1, p2);
 
 	GameController controller = new GameController(game);
@@ -106,7 +108,8 @@ public class GamePageServelet extends HttpServlet {
 					// if endX, endY has piece, update both pieces
 					// update moving piece to that space, update taken piece to XXXXXXXXXXXX (off Board)
 					if (game.getBoard().getPosition(endX, endY).getPiece() == null) {
-						DerbyDatabase.updatePieceLocation(startX, startY, endX, endY);
+						IDatabase.updatePieceLocation(startX, startY, endX, endY);
+						IDatabase.updateTurn(u1.getUsername(), game.getTurn(), game.getTurn()+1);
 					}
 					
 				} else {
