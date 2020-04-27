@@ -25,7 +25,6 @@ public class Board {
 	}
 
 	// Allows us to update the board when we want / need to
-
 	public void setBoard(Position[][] board) {
 		this.board = board;
 	}

@@ -88,8 +88,8 @@ public class InitialData {
 				int x= Integer.parseInt(i.next());
 				Point position = new Point(x, y) ;
 				Piece piece = null;
-				
 				PieceType type = null;
+				
 				if (typeEnum == 0) {
 					type = PieceType.PAWN;
 					piece= new Pawn(type, position, color);

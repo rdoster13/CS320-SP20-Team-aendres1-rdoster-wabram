@@ -293,6 +293,6 @@ public class DerbyDatabase implements IDatabase {
 	 System.out.println("Loading initial data..."); db.loadInitialData();
 	 
 	 System.out.println("Library DB successfully initialized!"); }
-	 
+
 
 }

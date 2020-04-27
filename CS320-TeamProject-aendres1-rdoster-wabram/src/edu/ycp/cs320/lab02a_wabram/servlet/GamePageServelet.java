@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.lab02a_wabram.controller.GameController;
 import edu.ycp.cs320.lab02a_wabram.model.*;
 
@@ -98,6 +99,15 @@ public class GamePageServelet extends HttpServlet {
 					controller.movePiece(game.getBoard().getPosition(startX, startY),
 							game.getBoard().getPosition(endX, endY));
 					game.setTurn(game.getTurn() + 1);
+					// Call to DerbyDB to update Piece
+					// Nested If to update 
+					// TODO: if EMPTY SPACE  
+					// TODO: if OCCUPIED
+					// if endX, endY has piece, update both pieces
+					// update moving piece to that space, update taken piece to XXXXXXXXXXXX (off Board)
+					if (game.getBoard().getPosition(endX, endY).getPiece() == null) {
+						DerbyDatabase.updatePieceLocation(startX, startY, endX, endY);
+					}
 					
 				} else {
 					System.out.println("\n INVALID MOVE ");
