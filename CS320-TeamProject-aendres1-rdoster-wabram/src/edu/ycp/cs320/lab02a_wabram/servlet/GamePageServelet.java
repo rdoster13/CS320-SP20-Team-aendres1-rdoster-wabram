@@ -98,7 +98,6 @@ public class GamePageServelet extends HttpServlet {
 				// if the move check passes, then update the board
 				if (game.getBoard().getPosition(startX, startY).getPiece().checkMove(new Point(endX, endY),
 						game.getBoard()) == true) {
-					//controller.updatePieceLocation(startX, startY, endX, endY);
 					controller.movePiece(game.getBoard().getPosition(startX, startY),
 							game.getBoard().getPosition(endX, endY));
 					game.setTurn(game.getTurn() + 1);
@@ -108,11 +107,10 @@ public class GamePageServelet extends HttpServlet {
 					// TODO: if OCCUPIED
 					// if endX, endY has piece, update both pieces
 					// update moving piece to that space, update taken piece to XXXXXXXXXXXX (off Board)
-					/*if (game.getBoard().getPosition(endX, endY).getPiece() == null) {
+					if (game.getBoard().getPosition(endX, endY).getPiece() == null) {
 						IDatabase.updatePieceLocation(startX, startY, endX, endY);
 						IDatabase.updateTurn(u1.getUsername(), game.getTurn(), game.getTurn()+1);
 					}
-					*/
 					
 				} else {
 					System.out.println("\n INVALID MOVE ");

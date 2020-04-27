@@ -72,7 +72,7 @@ public class InitialData {
 		ReadCSV readPieces = new ReadCSV("pieces.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer piece_ID = 1;
+			Integer userId = 1;
 			while (true) {
 				List<String> tuple = readPieces.next();
 				System.out.println(tuple);
@@ -80,6 +80,7 @@ public class InitialData {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
+				int piece_ID = Integer.parseInt(i.next());
 				int color= Integer.parseInt(i.next()) ;
 				int typeEnum = Integer.parseInt(i.next());
 				//PieceType type= ;
