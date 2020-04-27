@@ -272,7 +272,7 @@ public class DerbyDatabase implements IDatabase {
 						insertGame.setInt(4, (int) pieces.getPosition().getX());
 						insertGame.addBatch();
 					}
-					insertUser.executeBatch();
+					insertGame.executeBatch();
 					
 					return true;
 				} finally {
