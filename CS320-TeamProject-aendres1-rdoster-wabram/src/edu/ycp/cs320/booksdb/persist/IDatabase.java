@@ -1,13 +1,5 @@
 package edu.ycp.cs320.booksdb.persist;
 
-import java.sql.SQLException;
-import java.util.List;
-
-//import edu.ycp.cs320.booksdb.model.Author;
-//import edu.ycp.cs320.booksdb.model.Book;
-//import edu.ycp.cs320.booksdb.model.Pair;
-import edu.ycp.cs320.lab02a_wabram.model.LoginPage;
-
 //from prof hake example
 public interface IDatabase {
 	//public List<Pair<Author, Book>> findAuthorAndBookByTitle(String title);
@@ -15,13 +7,12 @@ public interface IDatabase {
 	//public Integer insertBookIntoBooksTable(String title, String isbn, int published, String lastName, String firstName);
 	//public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	//public List<Author> findAllAuthors();
-	//public List<Author> removeBookByTitle(String title);	
-	//public static boolean dbvalidCreds(String username, String password) throws SQLException;
+	//public List<Author> removeBookByTitle(String title);
 	
-	// TODO: Implement method to update piece positions
-	public static void updatePieceLocation(int xStart, int yStart, int xEnd, int yEnd) {
-	}
+	public boolean dbvalidCreds(String username, String password);
+	public void updatePieceLocation(int xStart, int yStart, int xEnd, int yEnd);
 	
+	// needs corrected
 	public static void updateTurn(String username, int thisTurn, int nextTurn) {
 	}
 }

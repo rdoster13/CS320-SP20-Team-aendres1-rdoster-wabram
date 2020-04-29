@@ -117,9 +117,9 @@ public class InitialData {
 				piece.setPiece_ID(piece_ID++);
 				piece.setColor(color);
 				piece.setType(type.getPieceType());
-				piece.setY(y);
 				piece.setX(x);
-				System.out.println(" PIECE_ID: " + piece.getPiece_ID() + " COLOR: " + piece.getColor() + " TYPE (ENUM_INT): " + piece.getType() + " ROW: " + piece.getY() + " COLUMN: " + piece.getX());
+				piece.setY(y);
+				System.out.println(" PIECE_ID: " + piece.getPiece_ID() + " COLOR: " + piece.getColor() + " TYPE (ENUM_INT): " + piece.getType() + " ROW: " + piece.getX() + " COLUMN: " + piece.getY());
 				piecesList.add(piece);
 			}
 			System.out.println("Pieces loaded from CSV file");

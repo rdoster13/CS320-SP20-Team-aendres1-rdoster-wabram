@@ -48,7 +48,11 @@ public class LoginPage {
 	public boolean validCreds(String username, String password) throws SQLException {
 		this.username=username;
 		this.password=password;
-		boolean result= DerbyDatabase.dbvalidCreds( username, password);
+		
+		DatabaseProvider.setInstance(new DerbyDatabase());
+		IDatabase db = DatabaseProvider.getInstance();
+		
+		boolean result= db.dbvalidCreds( username, password);
 		//********************************************************************************
 		//call a derby query to validate username and password
 		//********************************************************************************
