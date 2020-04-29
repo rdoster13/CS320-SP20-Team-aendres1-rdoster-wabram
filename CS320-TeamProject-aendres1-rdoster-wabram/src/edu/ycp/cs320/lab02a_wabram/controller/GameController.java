@@ -1,5 +1,7 @@
 package edu.ycp.cs320.lab02a_wabram.controller;
 
+import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
+import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
 import edu.ycp.cs320.lab02a_wabram.model.Game;
 import edu.ycp.cs320.lab02a_wabram.model.Position;
@@ -19,6 +21,15 @@ public class GameController {
 		 * then change the actual piece location
 		 * finally change the starting position to an empty space
 		 */
+		int xStart = (int) start.getPostition().getX();
+		int yStart = (int) start.getPostition().getY();
+		int xEnd = (int) end.getPostition().getX();
+		int yEnd = (int) end.getPostition().getY();
+		
+		DatabaseProvider.setInstance(new DerbyDatabase());
+		IDatabase db = DatabaseProvider.getInstance();
+		db.updatePieceLocation(xStart, yStart, xEnd, yEnd);
+		
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(start.getPiece());	 
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece().setPosition(end.getPostition());
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);

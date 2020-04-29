@@ -100,13 +100,16 @@ public class DerbyDatabase implements IDatabase {
 		return conn;
 	}
 
-	public static boolean dbvalidCreds(String username, String password) throws SQLException {
-		Connection conn = connect();
+	public boolean dbvalidCreds(String username, String password){
+		return executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
 		boolean found = false;
 		PreparedStatement stmt = null;
 		ResultSet resultSet = null;
 		try {
-			stmt = conn.prepareStatement("select usercreds.username, usercreds.password " + "from usercreds "
+			stmt = conn.prepareStatement("select usercreds.username, usercreds.password " 
+					+ "from usercreds "
 					+ "where (usercreds.username = ? and usercreds.password = ?) or 1 = 1");//+ "where usercreds.username= ? and usercreds.password= ?");
 			stmt.setString(1, username);
 			stmt.setString(2, password);
@@ -128,65 +131,71 @@ public class DerbyDatabase implements IDatabase {
 		
 		return found;
 	}
-	
-	//TODO: implement update turn
-	public void updateTurn(String username, int thisTurn, int nextTurn) {
-		executeTransaction(new Transaction<Boolean>() {
-			@Override
-			public Boolean execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				
-				try {
-					stmt = conn.prepareStatement(" update usercreds"
-							+ " set (usercreds.turn = ? ) "
-							+ " where (usercreds.username = ? and usercreds.turn = ? )"
-							+ ")"
-					);
-					stmt.setInt(1,nextTurn);
-					stmt.setString(2, username);
-					stmt.setInt(3, thisTurn);
-					
-					stmt.executeUpdate();
-					
-					System.out.println("Turn updated on usercreds table");
-					
-					return true;
-				} finally {
-					DBUtil.closeQuietly(stmt);
-				}
-			}
 		});
 	}
 	
 	// TODO: implement update pieces method
+	// row = y 
+	// col = x
 	public void updatePieceLocation(int xStart, int yStart, int xEnd, int yEnd) {
-		executeTransaction(new Transaction<Boolean>() {
+		executeTransaction(new Transaction<Void>() {
 			@Override
-			public Boolean execute(Connection conn) throws SQLException {
+			public Void execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				
 				try {
 					stmt = conn.prepareStatement(" update pieces"
-							+ " set (pieces.row = ? and pieces.col = ? ) "
-							+ " where (pieces.row = ? and pieces.col = ? )"
-							+ ")"
-					);
-					stmt.setInt(1,yEnd);
-					stmt.setInt(2, xEnd);
-					stmt.setInt(3, yStart);
-					stmt.setInt(4, xStart);
+							+ " set "
+							+ " pieces.col = ?, "
+							+ " pieces.row = ? "
+							// then choose the place to update
+							+ " where "
+							+ "	pieces.col = ? "
+							+ "	and pieces.row = ?");
+					stmt.setInt(1, xEnd);
+					stmt.setInt(2, yEnd);
+					stmt.setInt(3, xStart);
+					stmt.setInt(4, yStart);
 					
 					stmt.executeUpdate();
 					
-					System.out.println("Pieces table updated");
-					
-					return true;
+					System.out.println("Pieces table updated");					
 				} finally {
 					DBUtil.closeQuietly(stmt);
 				}
+				return null;
 			}
 		});
 	}
+	
+	//TODO: implement update turn
+		public void updateTurn(String username, int thisTurn, int nextTurn) {
+			executeTransaction(new Transaction<Boolean>() {
+				@Override
+				public Boolean execute(Connection conn) throws SQLException {
+					PreparedStatement stmt = null;
+					
+					try {
+						stmt = conn.prepareStatement(" update usercreds"
+								+ " set (usercreds.turn = ? ) "
+								+ " where (usercreds.username = ? and usercreds.turn = ? )"
+								+ ")"
+						);
+						stmt.setInt(1,nextTurn);
+						stmt.setString(2, username);
+						stmt.setInt(3, thisTurn);
+						
+						stmt.executeUpdate();
+						
+						System.out.println("Turn updated on usercreds table");
+						
+						return true;
+					} finally {
+						DBUtil.closeQuietly(stmt);
+					}
+				}
+			});
+		}
 	
 	
 	public void createTables() {
@@ -215,8 +224,8 @@ public class DerbyDatabase implements IDatabase {
 							"		generated always as identity (start with 1, increment by 1), " + 
 							"	color integer," +
 							"	type integer," +
-							"   row integer," +
-							"   col integer" +
+							"   col integer," +
+							"   row integer" +
 							")"
 					);
 					stmt2.executeUpdate();
@@ -247,7 +256,7 @@ public class DerbyDatabase implements IDatabase {
 				}
 
 				PreparedStatement insertUser = null;
-				PreparedStatement insertGame = null;
+				PreparedStatement insertPieces = null;
 
 				try {
 					
@@ -263,22 +272,22 @@ public class DerbyDatabase implements IDatabase {
 					}
 					insertUser.executeBatch();
 					
-					insertGame= conn.prepareStatement(""
+					insertPieces= conn.prepareStatement(""
 							+ "insert into pieces (color, type, row, col) values(?, ?, ?, ?)");
 					for (Piece pieces : pieceList) {
-						insertGame.setInt(1, pieces.getColor());
-						insertGame.setInt(2, pieces.getType());
-						insertGame.setInt(3, (int) pieces.getPosition().getY());
-						insertGame.setInt(4, (int) pieces.getPosition().getX());
-						insertGame.addBatch();
+						insertPieces.setInt(1, pieces.getColor());
+						insertPieces.setInt(2, pieces.getType());
+						insertPieces.setInt(3, (int) pieces.getPosition().getX());
+						insertPieces.setInt(4, (int) pieces.getPosition().getY());
+						insertPieces.addBatch();
 					}
-					insertGame.executeBatch();
+					insertPieces.executeBatch();
 					
 					return true;
 				} finally {
 					
 					DBUtil.closeQuietly(insertUser);
-					DBUtil.closeQuietly(insertGame);
+					DBUtil.closeQuietly(insertPieces);
 				}
 			}
 		});
