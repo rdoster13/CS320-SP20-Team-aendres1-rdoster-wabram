@@ -1,5 +1,9 @@
 package edu.ycp.cs320.booksdb.persist;
 
+import java.util.List;
+
+import edu.ycp.cs320.lab02a_wabram.model.Piece;
+
 //from prof hake example
 public interface IDatabase {
 	//public List<Pair<Author, Book>> findAuthorAndBookByTitle(String title);
@@ -14,4 +18,5 @@ public interface IDatabase {
 	
 	// needs corrected
 	public void updateTurn(String username, int thisTurn, int nextTurn);
+	public List<Piece> loadPieces();
 }

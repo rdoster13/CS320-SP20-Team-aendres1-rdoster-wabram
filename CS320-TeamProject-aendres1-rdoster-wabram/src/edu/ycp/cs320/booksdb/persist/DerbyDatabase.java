@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ycp.cs320.booksdb.model.Author;
+import edu.ycp.cs320.booksdb.model.Book;
+import edu.ycp.cs320.booksdb.model.Pair;
+import edu.ycp.cs320.booksdb.persist.DerbyDatabase.Transaction;
 import edu.ycp.cs320.lab02a_wabram.model.Game;
 //import edu.ycp.cs320.booksdb.persist.DerbyDatabase.Transaction;
 //import edu.ycp.cs320.booksdb.model.Author;
@@ -191,9 +195,66 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
+	@Override
+	public List<Piece> loadPieces() {
+		return executeTransaction(new Transaction<List<Piece>>() {
+			@Override
+			public List<Piece> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+					// retreive all attributes from pieces
+					stmt = conn.prepareStatement("select * from pieces");
+					
+
+					List<Piece> result = new ArrayList<Piece>();
+
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						// create new Author object
+						// retrieve attributes from resultSet starting with index 1
+						Piece piece = new Piece();
+						loadPiece(piece, resultSet, 1);
+
+						// create new Book object
+						// retrieve attributes from resultSet starting at index 4
+						
+
+						result.add(new Piece(piece));
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("There is no piece table");
+					}
+
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	   private void loadPiece(Piece piece, ResultSet resultSet, int index) throws SQLException {
+	        piece.setPiece_ID(resultSet.getInt(index++));
+	        piece.setColor(resultSet.getInt(index++));
+	        piece.setType(resultSet.getInt(index++));
+	        piece.setX(resultSet.getInt(index++));
+	        piece.setY(resultSet.getInt(index++));
+	    }
+	
+	/*
 	// load piece type, color, and location (row / col) from DB
-	public List<Piece<Pieces>> loadPieces() throws SQLException {
-		
+	
 		List<Piece<Pieces>> result = new ArrayList<Piece<Pieces>>();
 
 		PreparedStatement stmt = null;
@@ -225,7 +286,8 @@ public class DerbyDatabase implements IDatabase {
 
 		return result;
 	}
-
+	*/
+	
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
