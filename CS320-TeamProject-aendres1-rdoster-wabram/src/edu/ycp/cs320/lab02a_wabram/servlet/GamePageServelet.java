@@ -18,9 +18,12 @@ public class GamePageServelet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	// Add players to initiate the game
-	private Player p1;
-	private Player p2;
-	private User u1;
+	User u1 = new User();
+	User u2 = new User();
+
+	Player p1 = new Player(u1, 0);
+	Player p2 = new Player(u2, 1);
+	
 	Game game = new Game(p1, p2);
 
 	GameController controller = new GameController(game);
@@ -37,7 +40,13 @@ public class GamePageServelet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
+		//load the pieces from the DB
+		controller.getPieces();
+		
+		// set them on the board
+		game.getBoard();
+		
 		req.setAttribute("model", game);
 		System.out.println(" \nGamePage Servlet: doGet");
 
