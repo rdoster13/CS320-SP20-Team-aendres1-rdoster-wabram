@@ -1,10 +1,8 @@
 package edu.ycp.cs320.lab02a_wabram.controller;
 
 import java.awt.Point;
+import java.util.List;
 
-import edu.ycp.cs320.booksdb.model.Author;
-import edu.ycp.cs320.booksdb.model.Book;
-import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
@@ -54,56 +52,62 @@ public class GameController {
 	public void getPieces() {
 		// TODO pull pieces from DB
 		// set the loop to iterate through the pieces and set the board at each position. 
-		for (int y = 0; y < 8; y++ ) {
+		/*for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
-				
-				int typeEnum;
+				model.getBoard().newBoard();
+			}
+		}
+		*/
+				/*int typeEnum;
 				int colX;
 				int rowY;
 				int color;
 				Point position = new Point(colX, rowY);
-				Position[][] space = new Position[colX][rowY];
-				PieceType type = null;
-				Pawn piece;
-				
-				//process the ArrayList Tuples that return
-				/*for (Pair<Author, Book> authorBook : pieceList) {
-					Author author = authorBook.getLeft();
-					Book book = authorBook.getRight();
-					System.out.println(author.getLastname() + "," + author.getFirstname() + "," + book.getTitle() + "," + book.getIsbn());
-				}
 				*/
-				
-				if (typeEnum == 0) {
-					type = PieceType.PAWN;
-					piece= new Pawn(type, position, color);
-				} else if (typeEnum == 1) {
-					type = PieceType.ROOK;
-					piece= new Rook(type, position, color);
-				} else if (typeEnum == 2) {
-					type = PieceType.KNIGHT;
-					piece= new Knight(type, position, color);
-				} else if (typeEnum == 3) {
-					type = PieceType.BISHOP;
-					piece= new Bishop(type, position, color);
-				} else if (typeEnum == 4) {
-					type = PieceType.QUEEN;
-					piece= new Queen(type, position, color);
-				} else if (typeEnum == 5) {
-					type = PieceType.KING;
-					piece= new King(type, position, color);
-				} else {
-					piece = null;
+				/*PieceType type = null;
+				Pawn piece;
+				*/
+				DatabaseProvider.setInstance(new DerbyDatabase());
+				IDatabase db = DatabaseProvider.getInstance();
+				List<Piece> pieceList = db.loadPieces();
+				for (Piece piece : pieceList) {
+					/*int typeEnum = piece.getType();
+					int colX = piece.getX();
+					int rowY = piece.getY();
+					int color = piece.getColor();
+					PieceType type;
+					Point position = new Position;
+					if (typeEnum == 0) {
+						type = PieceType.PAWN;
+						piece= new Pawn(type, position , color);
+					} else if (typeEnum == 1) {
+						type = PieceType.ROOK;
+						piece= new Rook(type, position, color);
+					} else if (typeEnum == 2) {
+						type = PieceType.KNIGHT;
+						piece= new Knight(type, position, color);
+					} else if (typeEnum == 3) {
+						type = PieceType.BISHOP;
+						piece= new Bishop(type, position, color);
+					} else if (typeEnum == 4) {
+						type = PieceType.QUEEN;
+						piece= new Queen(type, position, color);
+					} else if (typeEnum == 5) {
+						type = PieceType.KING;
+						piece= new King(type, position, color);
+					}
+					*/
+					System.out.println("\nPiece Type:" + piece.getType() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
+					model.getBoard().getPosition(piece.getX(), piece.getY()).setPiece(piece);	 
+					Position[][] space = new Position[piece.getX()][piece.getY()];
+					model.getBoard().setBoard(space);
 				}
+				
 				// set each piece location. if location not in DB, then set to null
 				// col = x
 				// row = y
 				// return results as an arrayList of tuple and iterate through results, setting type, color and location (x, y)
-				model.getBoard().getPosition(colX, rowY).setPiece(piece);
 				// set the pieces on the board
-				model.getBoard().setBoard(space);
-			}
-		}
 	}
 
 
