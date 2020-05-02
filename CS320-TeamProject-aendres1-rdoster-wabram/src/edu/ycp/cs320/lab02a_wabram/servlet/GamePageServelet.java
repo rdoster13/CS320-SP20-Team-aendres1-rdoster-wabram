@@ -41,7 +41,7 @@ public class GamePageServelet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//load the pieces from the DB
+		// load the pieces from the DB
 		controller.getPieces();
 		
 		// set them on the board
