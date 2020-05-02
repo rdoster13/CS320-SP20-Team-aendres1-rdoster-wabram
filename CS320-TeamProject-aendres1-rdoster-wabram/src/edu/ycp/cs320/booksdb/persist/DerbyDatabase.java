@@ -251,8 +251,12 @@ public class DerbyDatabase implements IDatabase {
 							type = PieceType.KING;
 							piece= new King(type, position, color);
 						}
-						//loadPiece(piece, resultSet, 1);
 						
+						piece.setColor(color);
+						piece.setPieceType(type);
+						piece.setPosition(position);
+						//loadPiece(piece, resultSet, 1);
+						//System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
 						result.add(piece);
 					}
 

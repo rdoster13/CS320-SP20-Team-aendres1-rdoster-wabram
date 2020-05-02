@@ -44,7 +44,7 @@ public class LoginPageServlet extends HttpServlet {
 		username = req.getParameter("username");
 		password = req.getParameter("password");
 
-		System.out.println("Name: " + username + "Password: " + password);			
+		System.out.println("Name: " + username + "\nPassword: " + password);			
 
 		if (username == null || password == null || username.equals("") || password.equals("")) {
 			errorMessage = "Please enter a username and a password";
