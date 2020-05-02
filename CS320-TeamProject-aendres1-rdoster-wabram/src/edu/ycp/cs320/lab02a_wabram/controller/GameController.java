@@ -52,12 +52,12 @@ public class GameController {
 	public void getPieces() {
 		// TODO pull pieces from DB
 		// set the loop to iterate through the pieces and set the board at each position. 
-		/*for (int y = 0; y < 8; y++) {
+		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
 				model.getBoard().newBoard();
 			}
 		}
-		*/
+		
 				/*int typeEnum;
 				int colX;
 				int rowY;
@@ -71,36 +71,31 @@ public class GameController {
 				IDatabase db = DatabaseProvider.getInstance();
 				List<Piece> pieceList = db.loadPieces();
 				for (Piece piece : pieceList) {
-					/*int typeEnum = piece.getType();
-					int colX = piece.getX();
-					int rowY = piece.getY();
 					int color = piece.getColor();
-					PieceType type;
-					Point position = new Position;
-					if (typeEnum == 0) {
-						type = PieceType.PAWN;
-						piece= new Pawn(type, position , color);
-					} else if (typeEnum == 1) {
-						type = PieceType.ROOK;
-						piece= new Rook(type, position, color);
-					} else if (typeEnum == 2) {
-						type = PieceType.KNIGHT;
-						piece= new Knight(type, position, color);
-					} else if (typeEnum == 3) {
-						type = PieceType.BISHOP;
-						piece= new Bishop(type, position, color);
-					} else if (typeEnum == 4) {
-						type = PieceType.QUEEN;
-						piece= new Queen(type, position, color);
-					} else if (typeEnum == 5) {
-						type = PieceType.KING;
-						piece= new King(type, position, color);
+					PieceType type = piece.getPieceType();
+					if (type == PieceType.PAWN) {
+						piece= new Pawn(type, piece.getPosition(), color);
+					} else if (type == PieceType.ROOK) {
+						piece= new Rook(type,  piece.getPosition(), color);
+					} else if (type == PieceType.KNIGHT) {
+						piece= new Knight(type,  piece.getPosition(), color);
+					} else if (type == PieceType.BISHOP) {
+						piece= new Bishop(type,  piece.getPosition(), color);
+					} else if (type == PieceType.QUEEN) {
+						piece= new Queen(type, piece.getPosition(), color);
+					} else if (type == PieceType.KING) {
+						piece= new King(type,  piece.getPosition(), color);
 					}
-					*/
-					System.out.println("\nPiece Type:" + piece.getType() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
-					model.getBoard().getPosition(piece.getX(), piece.getY()).setPiece(piece);	 
+					
+					
+					System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
+					
 					Position[][] space = new Position[piece.getX()][piece.getY()];
+					System.out.println("\nI got here!");
 					model.getBoard().setBoard(space);
+					System.out.println("\nI got here too!!!!!");
+					model.getBoard().getPosition(piece.getX(), piece.getY()).setPiece(piece);
+					System.out.println("\nI have finished the EPIC TREK");
 				}
 				
 				// set each piece location. if location not in DB, then set to null

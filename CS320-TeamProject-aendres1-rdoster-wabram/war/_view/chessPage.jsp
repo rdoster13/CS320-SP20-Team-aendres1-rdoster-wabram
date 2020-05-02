@@ -41,7 +41,7 @@
 			<% for (int y = 0; y < 8; y++ ) { %>
 			<tr>
 				<% for (int x = 0; x < 8; x++) { %>
-				<td onclick="transferCallToServlet(<%=x%> , <%=y%>)" class="test<%=(x+y)%2 %>">
+				<td onclick= "transferCallToServlet(<%=x%> , <%=y%>)" class= "test<%=(x+y)%2%>" >
 					<% if (model.getBoard().getPosition(x, y).getPiece() != null) {
 						String type = null;
 						
