@@ -1,5 +1,6 @@
 package edu.ycp.cs320.booksdb.persist;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,18 +11,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ycp.cs320.booksdb.model.Author;
-import edu.ycp.cs320.booksdb.model.Book;
-import edu.ycp.cs320.booksdb.model.Pair;
-import edu.ycp.cs320.booksdb.persist.DerbyDatabase.Transaction;
+
+import edu.ycp.cs320.lab02a_wabram.model.Bishop;
 import edu.ycp.cs320.lab02a_wabram.model.Game;
+import edu.ycp.cs320.lab02a_wabram.model.King;
+import edu.ycp.cs320.lab02a_wabram.model.Knight;
 //import edu.ycp.cs320.booksdb.persist.DerbyDatabase.Transaction;
 //import edu.ycp.cs320.booksdb.model.Author;
 //import edu.ycp.cs320.booksdb.model.Book;
 //import edu.ycp.cs320.booksdb.model.BookAuthor;
 //import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.lab02a_wabram.model.LoginPage;
+import edu.ycp.cs320.lab02a_wabram.model.Pawn;
 import edu.ycp.cs320.lab02a_wabram.model.Piece;
+import edu.ycp.cs320.lab02a_wabram.model.PieceType;
+import edu.ycp.cs320.lab02a_wabram.model.Queen;
+import edu.ycp.cs320.lab02a_wabram.model.Rook;
 import edu.ycp.cs320.lab02a_wabram.model.User;
 
 //used from Prof Hake library example 
@@ -218,16 +223,37 @@ public class DerbyDatabase implements IDatabase {
 					while (resultSet.next()) {
 						found = true;
 
-						// create new Author object
-						// retrieve attributes from resultSet starting with index 1
-						Piece piece = new Piece();
-						loadPiece(piece, resultSet, 1);
-
-						// create new Book object
-						// retrieve attributes from resultSet starting at index 4
+						int index=1;
+						int pieceid=resultSet.getInt(index++);
+						int color=resultSet.getInt(index++);
+						int typeEnum=resultSet.getInt(index++);
+						int pieceX=resultSet.getInt(index++);
+						int pieceY=resultSet.getInt(index++);
+						Point position = new Point(pieceX, pieceY);
+						Piece piece= null;
+						PieceType type=null;
+						if (typeEnum == 0) {
+							type = PieceType.PAWN;
+							piece= new Pawn(type, position, color);
+						} else if (typeEnum == 1) {
+							type = PieceType.ROOK;
+							piece= new Rook(type, position, color);
+						} else if (typeEnum == 2) {
+							type = PieceType.KNIGHT;
+							piece= new Knight(type, position, color);
+						} else if (typeEnum == 3) {
+							type = PieceType.BISHOP;
+							piece= new Bishop(type, position, color);
+						} else if (typeEnum == 4) {
+							type = PieceType.QUEEN;
+							piece= new Queen(type, position, color);
+						} else if (typeEnum == 5) {
+							type = PieceType.KING;
+							piece= new King(type, position, color);
+						}
+						//loadPiece(piece, resultSet, 1);
 						
-
-						result.add(new Piece(piece));
+						result.add(piece);
 					}
 
 					// check if the title was found
@@ -243,7 +269,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+		/*
 	   private void loadPiece(Piece piece, ResultSet resultSet, int index) throws SQLException {
 	        piece.setPiece_ID(resultSet.getInt(index++));
 	        piece.setColor(resultSet.getInt(index++));
@@ -251,7 +277,7 @@ public class DerbyDatabase implements IDatabase {
 	        piece.setX(resultSet.getInt(index++));
 	        piece.setY(resultSet.getInt(index++));
 	    }
-	
+		*/
 	/*
 	// load piece type, color, and location (row / col) from DB
 	
