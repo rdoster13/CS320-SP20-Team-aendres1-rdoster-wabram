@@ -175,7 +175,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	// TODO: implement update turn
-	public void updateTurn( int nextTurn) {
+	public void updateTurn(int nextTurn) {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
@@ -183,7 +183,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(" update usercreds" 
-						+ " set (usercreds.turn = ? ) ");
+						+ " set usercreds.turn = ? ");
 					stmt.setInt(1, nextTurn);
 					
 					stmt.executeUpdate();
