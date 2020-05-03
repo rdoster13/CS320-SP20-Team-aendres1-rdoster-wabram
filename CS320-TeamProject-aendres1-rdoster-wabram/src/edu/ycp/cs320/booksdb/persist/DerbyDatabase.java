@@ -314,7 +314,43 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	
+	public void destroyDB() {
+        executeTransaction(new Transaction<Boolean>() {
+            @Override
+            public Boolean execute(Connection conn) throws SQLException {
+                PreparedStatement stmt1 = null;
+                PreparedStatement stmt2 = null;
+                PreparedStatement stmt3 = null;
+                PreparedStatement stmt4 = null;
+
+                try {
+                    stmt1 = conn.prepareStatement(" truncate table usercreds");
+                    stmt1.executeUpdate();
+                    System.out.println("\nusercreds table truncated");
+
+                    stmt2 = conn.prepareStatement(" truncate table pieces");
+                    stmt2.executeUpdate();
+                    System.out.println("\npieces table truncated");
+
+                    stmt3 = conn.prepareStatement(" drop table usercreds");
+                    stmt3.executeUpdate();
+                    System.out.println("\nusercreds table dropped");
+
+                    stmt4 = conn.prepareStatement(" drop table pieces");
+                    stmt4.executeUpdate();
+                    System.out.println("\npieces table dropped");
+
+                    return true;
+                } finally {
+                    DBUtil.closeQuietly(stmt1);
+                    DBUtil.closeQuietly(stmt2);
+                    DBUtil.closeQuietly(stmt3);
+                    DBUtil.closeQuietly(stmt4);
+                }
+            }
+        });
+
+    }
 	
 	
 	
