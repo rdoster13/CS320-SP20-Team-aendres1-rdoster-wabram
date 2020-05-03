@@ -81,7 +81,7 @@
 		</table> 
 		
 		<form action= "${pageContext.servletContext.contextPath}/chessPage" method="post">
-			<input type="Submit" name="submit" value="New Game">
+			<input type="Submit" name="newgame" value="New Game">
 		</form>
 		
 		</div>
