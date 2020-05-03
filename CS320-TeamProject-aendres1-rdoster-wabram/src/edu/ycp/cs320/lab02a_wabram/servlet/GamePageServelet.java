@@ -110,7 +110,6 @@ public class GamePageServelet extends HttpServlet {
 							game.getBoard().getPosition(startX, startY),
 							game.getBoard().getPosition(endX, endY));
 					
-					game.setTurn(game.getTurn() + 1);
 					// Call to DerbyDB to update Piece
 					// Nested If to update 
 					// TODO: if EMPTY SPACE  
