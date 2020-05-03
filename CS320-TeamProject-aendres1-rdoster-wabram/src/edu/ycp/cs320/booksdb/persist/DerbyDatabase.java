@@ -183,7 +183,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(" update usercreds" 
-						+ " set usercreds.turn = ? ");
+						+ " set usercreds.gameturn = ? ");
 					stmt.setInt(1, nextTurn);
 					
 					stmt.executeUpdate();
@@ -223,8 +223,14 @@ public class DerbyDatabase implements IDatabase {
 						int turn= resultset.getInt(index++);
 						result= turn;
 					}
-					
-					System.out.println("Turn retrieved, it is " + result + "'s turn");
+					// just for fun print statements
+					String color;
+					if (result % 2 == 0) {
+						color = "white";
+					} else {
+						color = "black";
+					}
+					System.out.println("\nTurn retrieved, it is " + color + "'s turn");
 
 					return result;
 				} finally {
