@@ -21,4 +21,6 @@ public interface IDatabase {
 	public List<Piece> loadPieces();
 	public int loadTurn();
 	public void destroyDB();
+	public void createTables();
+    public void loadInitialData();
 }
