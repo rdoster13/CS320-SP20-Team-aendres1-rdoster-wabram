@@ -175,19 +175,17 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	// TODO: implement update turn
-	public void updateTurn(String username, int thisTurn, int nextTurn) {
+	public void updateTurn( int nextTurn) {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 
 				try {
-					stmt = conn.prepareStatement(" update usercreds" + " set (usercreds.turn = ? ) "
-							+ " where (usercreds.username = ? and usercreds.turn = ? )" + ")");
+					stmt = conn.prepareStatement(" update usercreds" 
+						+ " set (usercreds.turn = ? ) ");
 					stmt.setInt(1, nextTurn);
-					stmt.setString(2, username);
-					stmt.setInt(3, thisTurn);
-
+					
 					stmt.executeUpdate();
 
 					System.out.println("Turn updated on usercreds table");
