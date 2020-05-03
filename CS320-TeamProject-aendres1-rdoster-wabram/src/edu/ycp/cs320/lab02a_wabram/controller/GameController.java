@@ -17,6 +17,7 @@ import edu.ycp.cs320.lab02a_wabram.model.PieceType;
 import edu.ycp.cs320.lab02a_wabram.model.Position;
 import edu.ycp.cs320.lab02a_wabram.model.Queen;
 import edu.ycp.cs320.lab02a_wabram.model.Rook;
+import edu.ycp.cs320.lab02a_wabram.model.LoginPage;
 
 public class GameController {
 	private Game model;
@@ -46,6 +47,7 @@ public class GameController {
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece()
 				.setPosition(end.getPostition());
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);
+		db.updateTurn(db.loadTurn()+1);
 	}
 
 	public void getPieces() {
@@ -87,11 +89,11 @@ public class GameController {
 					+ piece.getPosition() + "\nPiece Color:" + piece.getColor());
 
 			//Position[][] space = new Position[piece.getX()][piece.getY()];
-			System.out.println("\nI got here!");
+			//System.out.println("\nI got here!");
 			//model.getBoard().setBoard(space);
-			System.out.println("\nI got here too!!!!!");
+			//System.out.println("\nI got here too!!!!!");
 			model.getBoard().setPiece(piece);
-			System.out.println("\nI have finished the EPIC TREK");
+			//System.out.println("\nI have finished the EPIC TREK");
 		}
 
 		// set each piece location. if location not in DB, then set to null
@@ -102,10 +104,12 @@ public class GameController {
 		// set the pieces on the board
 	}
 
-	/*
-	 * public void updatePieceLocation(int startX, int startY, int endX, int endY) {
-	 * IDatabase.updatePieceLocation(startX, startY, endX, endY);
-	 * System.out.println("Piece Location updated in piece table"); }
-	 */
+	public int getTurn() {
+		DatabaseProvider.setInstance(new DerbyDatabase());
+		IDatabase db = DatabaseProvider.getInstance();
+		
+		int turn= db.loadTurn();
+		return turn;
+	}
 
 }

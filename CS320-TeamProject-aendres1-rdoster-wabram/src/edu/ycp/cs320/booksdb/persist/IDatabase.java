@@ -17,6 +17,7 @@ public interface IDatabase {
 	public void updatePieceLocation(int xStart, int yStart, int xEnd, int yEnd);
 	
 	// needs corrected
-	public void updateTurn(String username, int thisTurn, int nextTurn);
+	public void updateTurn(int nextTurn);
 	public List<Piece> loadPieces();
+	public int loadTurn();
 }

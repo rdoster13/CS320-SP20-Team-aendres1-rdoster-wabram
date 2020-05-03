@@ -74,7 +74,7 @@ public class GamePageServelet extends HttpServlet {
 			// that the piece belongs to the correct player based on he turn counter
 			// if not, then do not allow the piece selection
 			if (game.getBoard().getPosition(startX, startY).getPiece() != null) {
-				if (game.getTurn() % 2 != game.getBoard().getPosition(startX, startY).getPiece().getColor()) {
+				if (controller.getTurn() % 2 != game.getBoard().getPosition(startX, startY).getPiece().getColor()) {
 					turnStart = false;
 				}
 			} else {
