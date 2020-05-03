@@ -36,14 +36,16 @@ public class LoginPage {
 	*/
 	
 	//call a db query to validate username and password
-	String username=null;
-	String password=null;
+	
 	/*
 	// login name - test version  *** got from Prof Hake***
 		public boolean validUsername(String username) {
 			return creds.containsKey(username);
 		}
 	*/
+	
+	String username;
+	String password;
 	
 	public boolean validCreds(String username, String password) throws SQLException {
 		this.username=username;
@@ -57,6 +59,10 @@ public class LoginPage {
 		//call a derby query to validate username and password
 		//********************************************************************************
 		return result;
+	}
+	
+	public String getUsername() {
+		return username;
 	}
 				
 		/*

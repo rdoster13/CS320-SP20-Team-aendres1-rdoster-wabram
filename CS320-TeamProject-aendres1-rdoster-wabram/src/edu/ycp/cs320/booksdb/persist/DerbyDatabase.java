@@ -198,6 +198,42 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
+	public int loadTurn() {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				
+				int result=-1;
+				ResultSet resultset;
+				try {
+					stmt = conn.prepareStatement(" select usercreds.gameturn " 
+							+ "from usercreds " 
+							+ "where usercreds.usercreds_id = 1 ");
+					//stmt.setString(1, username);
+					
+					resultset=stmt.executeQuery();
+					
+					Boolean found = false;
+
+					while (resultset.next()) {
+						found = true;
+						
+						int index=1;
+						int turn= resultset.getInt(index++);
+						result= turn;
+					}
+					
+					System.out.println("Turn retrieved, it is " + result + "'s turn");
+
+					return result;
+				} finally {
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
 	@Override
 	public List<Piece> loadPieces() {
 		return executeTransaction(new Transaction<List<Piece>>() {
@@ -271,6 +307,11 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	
+	
+	
+	
+	
 		/*
 	   private void loadPiece(Piece piece, ResultSet resultSet, int index) throws SQLException {
 	        piece.setPiece_ID(resultSet.getInt(index++));
