@@ -59,6 +59,16 @@ public class GamePageServelet extends HttpServlet {
 			// We have to write the method to load the new game here.
 			controller.newGame();
 			
+			// load the pieces from the DB
+			controller.getPieces();
+
+			// set them on the board
+			game.getBoard();
+
+			req.setAttribute("model", game);
+			System.out.println(" \nGamePage Servlet: doGet");
+
+			req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 		} else {
 			// Error Message Printing
 			String errorMessage = null;
