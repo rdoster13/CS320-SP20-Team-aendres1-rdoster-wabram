@@ -25,6 +25,7 @@ public class GameController {
 	// Set the model
 	public GameController(Game model) {
 		this.model = model;
+		
 	}
 
 	public void movePiece(Position start, Position end) {
