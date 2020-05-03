@@ -20,4 +20,5 @@ public interface IDatabase {
 	public void updateTurn(int nextTurn);
 	public List<Piece> loadPieces();
 	public int loadTurn();
+	public void destroyDB();
 }

@@ -112,4 +112,14 @@ public class GameController {
 		return turn;
 	}
 
+	public void newGame() {
+        DatabaseProvider.setInstance(new DerbyDatabase());
+        IDatabase db = DatabaseProvider.getInstance();
+        db.destroyDB();
+        db.createTables();
+        db.loadInitialData();
+        db.loadPieces();
+        db.loadTurn();
+    }
+	
 }
