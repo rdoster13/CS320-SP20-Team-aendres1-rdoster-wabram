@@ -57,6 +57,7 @@ public class GamePageServelet extends HttpServlet {
 		if (req.getParameter("newgame") != null) {
 			System.out.println("CHessPage Servlet: creating new game");
 			// We have to write the method to load the new game here.
+			controller.newGame();
 		} else {
 			// Error Message Printing
 			String errorMessage = null;
