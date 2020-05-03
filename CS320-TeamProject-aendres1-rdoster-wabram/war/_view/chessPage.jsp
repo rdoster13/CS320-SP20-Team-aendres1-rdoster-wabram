@@ -32,7 +32,7 @@
 			Play Chess!
 		</Header>
 	</form>
-
+	
 	<form name="requestForm" method="post">
 		<input type="hidden" name="x1">
 		<input type="hidden" name="y1">
@@ -79,6 +79,11 @@
 			</tr> 
 			<% } %> 
 		</table> 
+		
+		<form action= "${pageContext.servletContext.contextPath}/chessPage" method="post">
+			<input type="Submit" name="submit" value="New Game">
+		</form>
+		
 		</div>
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${gameLog}</div>
