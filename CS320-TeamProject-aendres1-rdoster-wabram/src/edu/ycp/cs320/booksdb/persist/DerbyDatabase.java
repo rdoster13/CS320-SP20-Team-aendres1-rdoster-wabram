@@ -241,6 +241,160 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
+	public List<Piece> getAllXColorPieces(int color) {
+		return executeTransaction(new Transaction<List<Piece>>() {
+			@Override
+			public List<Piece> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+					// retreive all attributes from pieces
+					stmt = conn.prepareStatement("select * "
+							+ "from pieces"
+							+"where pieces.row<8 and pieces.col<8 and color= ? ");
+					stmt.setInt(1, color);
+
+					List<Piece> result = new ArrayList<Piece>();
+
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						int index=1;
+						int pieceid=resultSet.getInt(index++);
+						int color=resultSet.getInt(index++);
+						int typeEnum=resultSet.getInt(index++);
+						int pieceX=resultSet.getInt(index++);
+						int pieceY=resultSet.getInt(index++);
+						Point position = new Point(pieceX, pieceY);
+						Piece piece= null;
+						PieceType type=null;
+						if (typeEnum == 0) {
+							type = PieceType.PAWN;
+							piece= new Pawn(type, position, color);
+						} else if (typeEnum == 1) {
+							type = PieceType.ROOK;
+							piece= new Rook(type, position, color);
+						} else if (typeEnum == 2) {
+							type = PieceType.KNIGHT;
+							piece= new Knight(type, position, color);
+						} else if (typeEnum == 3) {
+							type = PieceType.BISHOP;
+							piece= new Bishop(type, position, color);
+						} else if (typeEnum == 4) {
+							type = PieceType.QUEEN;
+							piece= new Queen(type, position, color);
+						} else if (typeEnum == 5) {
+							type = PieceType.KING;
+							piece= new King(type, position, color);
+						}
+						
+						piece.setColor(color);
+						piece.setPieceType(type);
+						piece.setPosition(position);
+						//loadPiece(piece, resultSet, 1);
+						//System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
+						result.add(piece);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("There is no piece this color in the table");
+					}
+
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public Piece getKing(int color) {
+		return executeTransaction(new Transaction<Piece>() {
+			@Override
+			public Piece execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+					// retreive all attributes from pieces
+					stmt = conn.prepareStatement("select * "
+							+ "from pieces" 
+							+ "where pieces.type= 5 and pieces.color= ? ");
+					stmt.setInt(1, color);
+					
+
+					Piece result = null;
+
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						int index=1;
+						int pieceid=resultSet.getInt(index++);
+						int color=resultSet.getInt(index++);
+						int typeEnum=resultSet.getInt(index++);
+						int pieceX=resultSet.getInt(index++);
+						int pieceY=resultSet.getInt(index++);
+						Point position = new Point(pieceX, pieceY);
+						Piece piece= null;
+						PieceType type=null;
+						if (typeEnum == 0) {
+							type = PieceType.PAWN;
+							piece= new Pawn(type, position, color);
+						} else if (typeEnum == 1) {
+							type = PieceType.ROOK;
+							piece= new Rook(type, position, color);
+						} else if (typeEnum == 2) {
+							type = PieceType.KNIGHT;
+							piece= new Knight(type, position, color);
+						} else if (typeEnum == 3) {
+							type = PieceType.BISHOP;
+							piece= new Bishop(type, position, color);
+						} else if (typeEnum == 4) {
+							type = PieceType.QUEEN;
+							piece= new Queen(type, position, color);
+						} else if (typeEnum == 5) {
+							type = PieceType.KING;
+							piece= new King(type, position, color);
+						}
+						
+						piece.setColor(color);
+						piece.setPieceType(type);
+						piece.setPosition(position);
+						//loadPiece(piece, resultSet, 1);
+						//System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
+						result=piece;
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("There is no king this color on the table");
+					}
+
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	
+	@Override
 	public List<Piece> loadPieces() {
 		return executeTransaction(new Transaction<List<Piece>>() {
 			@Override

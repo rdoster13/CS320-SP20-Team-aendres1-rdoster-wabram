@@ -23,6 +23,8 @@ public interface IDatabase {
 	public void destroyDB();
 	public void createTables();
     public void loadInitialData();
+	public Piece getKing(int color);
+	public List<Piece> getAllXColorPieces(int color);
 
 
 }
