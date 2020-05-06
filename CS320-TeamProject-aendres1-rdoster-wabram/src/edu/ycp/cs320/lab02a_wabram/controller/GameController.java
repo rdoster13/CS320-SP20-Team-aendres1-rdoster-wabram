@@ -25,7 +25,7 @@ public class GameController {
 	// Set the model
 	public GameController(Game model) {
 		this.model = model;
-		
+
 	}
 
 	public void movePiece(Position start, Position end) {
@@ -48,7 +48,7 @@ public class GameController {
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece()
 				.setPosition(end.getPostition());
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);
-		db.updateTurn(db.loadTurn()+1);
+		db.updateTurn(db.loadTurn() + 1);
 	}
 
 	public void getPieces() {
@@ -71,7 +71,7 @@ public class GameController {
 		for (Piece piece : pieceList) {
 			int color = piece.getColor();
 			PieceType type = piece.getPieceType();
-			
+
 			if (type == PieceType.PAWN) {
 				piece = new Pawn(type, piece.getPosition(), color);
 			} else if (type == PieceType.ROOK) {
@@ -89,12 +89,12 @@ public class GameController {
 			System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:"
 					+ piece.getPosition() + "\nPiece Color:" + piece.getColor());
 
-			//Position[][] space = new Position[piece.getX()][piece.getY()];
-			//System.out.println("\nI got here!");
-			//model.getBoard().setBoard(space);
-			//System.out.println("\nI got here too!!!!!");
+			// Position[][] space = new Position[piece.getX()][piece.getY()];
+			// System.out.println("\nI got here!");
+			// model.getBoard().setBoard(space);
+			// System.out.println("\nI got here too!!!!!");
 			model.getBoard().setPiece(piece);
-			//System.out.println("\nI have finished the EPIC TREK");
+			// System.out.println("\nI have finished the EPIC TREK");
 		}
 
 		// set each piece location. if location not in DB, then set to null
@@ -108,19 +108,85 @@ public class GameController {
 	public int getTurn() {
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		IDatabase db = DatabaseProvider.getInstance();
-		
-		int turn= db.loadTurn();
+
+		int turn = db.loadTurn();
 		return turn;
 	}
 
 	public void newGame() {
-        DatabaseProvider.setInstance(new DerbyDatabase());
-        IDatabase db = DatabaseProvider.getInstance();
-        db.destroyDB();
-        db.createTables();
-        db.loadInitialData();
-        db.loadPieces();
-        db.loadTurn();
-    }
+		DatabaseProvider.setInstance(new DerbyDatabase());
+		IDatabase db = DatabaseProvider.getInstance();
+		db.destroyDB();
+		db.createTables();
+		db.loadInitialData();
+		db.loadPieces();
+		db.loadTurn();
+	}
+
+	public void takePiece(Position start, Position end) {
+		/*
+		 * First, set the piece in the end position to be equal to that start position
+		 * so we can store / save the location then change the actual piece location
+		 * finally change the starting position to an empty space
+		 */
+		int xStart = (int) start.getPostition().getX();
+		int yStart = (int) start.getPostition().getY();
+		int xEnd = (int) end.getPostition().getX();
+		int yEnd = (int) end.getPostition().getY();
+
+		DatabaseProvider.setInstance(new DerbyDatabase());
+		IDatabase db = DatabaseProvider.getInstance();
+		db.updatePieceLocation(xStart, yStart, xEnd, yEnd);
+		// db.updateTurn(String username, int thisTurn, int nextTurn);
+
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(start.getPiece());
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece()
+				.setPosition(end.getPostition());
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);
+
+	}
 	
+	public boolean checkOppCheckCond(int color) {
+		int oppColor;
+		// if statement to choose color to search for
+		if (color == 0) {
+			oppColor = 1;
+		} else {
+			oppColor = 0;
+		}
+		// get the list of pieces of the specified color
+		DatabaseProvider.setInstance(new DerbyDatabase());
+		IDatabase db = DatabaseProvider.getInstance();
+		List<Piece> pieceList = db.getAllXColorPieces(color);
+		// pull the king of the opposing color
+		Piece king = db.getKing(oppColor);
+		//king.getColor();
+		
+		// check for a valid move to the king location
+		// return the condition, True if in chck, False if not
+		for (Piece piece : pieceList) {
+			int tempColor = piece.getColor();
+			PieceType type = piece.getPieceType();
+			Point position = piece.getPosition();
+
+			if (type == PieceType.PAWN) {
+				piece = new Pawn(type, position, tempColor);
+			} else if (type == PieceType.ROOK) {
+				piece = new Rook(type, position, tempColor);
+			} else if (type == PieceType.KNIGHT) {
+				piece = new Knight(type, position, tempColor);
+			} else if (type == PieceType.BISHOP) {
+				piece = new Bishop(type, position, tempColor);
+			} else if (type == PieceType.QUEEN) {
+				piece = new Queen(type, position, tempColor);
+			} else if (type == PieceType.KING) {
+				piece = new King(type, position, tempColor);
+			}
+			 if (model.getBoard().getPiece(piece.getX(), piece.getY()).checkMove(king.getPosition(), model.getBoard()) == true) {
+				 return true;
+			 } 
+		}
+		return false;
+	}
+
 }
