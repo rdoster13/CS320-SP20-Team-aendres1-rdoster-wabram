@@ -246,9 +246,13 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 
 				try {
-					// retreive all attributes from pieces
-					stmt = conn.prepareStatement(
-							"select * " + "from pieces" + "where pieces.row<8 and pieces.col<8 and color= ? ");
+					// Retrieve all attributes from pieces
+					stmt = conn.prepareStatement("select * " 
+							+ "from pieces "
+							+ "where pieces.row < 8 and "
+							+ "pieces.col < 8 and "
+							+ "pieces.type != 5 and "
+							+ "pieces.color = ? ");
 					stmt.setInt(1, color);
 
 					List<Piece> result = new ArrayList<Piece>();
@@ -323,9 +327,12 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 
 				try {
-					// retreive all attributes from pieces
-					stmt = conn.prepareStatement(
-							"select * " + "from pieces" + "where pieces.type= 5 and pieces.color= ? ");
+					// Retrieve all attributes from pieces
+					stmt = conn.prepareStatement("select * " 
+									+ "from pieces" 
+									+ "where pieces.type = 5 and "
+									+ "pieces.color = ? ");
+					
 					stmt.setInt(1, color);
 
 					Piece result = null;
@@ -345,8 +352,12 @@ public class DerbyDatabase implements IDatabase {
 						int pieceX = resultSet.getInt(index++);
 						int pieceY = resultSet.getInt(index++);
 						Point position = new Point(pieceX, pieceY);
-						PieceType type = PieceType.KING;
-						Piece piece = new King(type, position, color);
+						PieceType type = null;
+						Piece piece = null;
+						if (typeEnum == 5) {
+							type = PieceType.KING;
+							piece = new King(type, position, color);
+						}
 
 						piece.setColor(color);
 						piece.setPieceType(type);

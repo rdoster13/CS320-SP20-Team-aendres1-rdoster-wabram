@@ -21,7 +21,7 @@ import edu.ycp.cs320.lab02a_wabram.model.LoginPage;
 
 public class GameController {
 	private Game model;
-
+	
 	// Set the model
 	public GameController(Game model) {
 		this.model = model;
@@ -86,8 +86,8 @@ public class GameController {
 				piece = new King(type, piece.getPosition(), color);
 			}
 
-			System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:"
-					+ piece.getPosition() + "\nPiece Color:" + piece.getColor());
+			//System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:"
+					//+ piece.getPosition() + "\nPiece Color:" + piece.getColor());
 
 			// Position[][] space = new Position[piece.getX()][piece.getY()];
 			// System.out.println("\nI got here!");
@@ -145,8 +145,8 @@ public class GameController {
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);
 
 	}
-	
-	public boolean evaluateOppCheck(int color) {
+
+	public boolean evaluateOppCheck(int color, Position start, Position end) {
 		int oppColor;
 		// if statement to choose color to search for
 		if (color == 0) {
@@ -154,14 +154,35 @@ public class GameController {
 		} else {
 			oppColor = 0;
 		}
+
 		// get the list of pieces of the specified color
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		IDatabase db = DatabaseProvider.getInstance();
 		List<Piece> pieceList = db.getAllXColorPieces(color);
+
 		// pull the king of the opposing color
 		Piece king = db.getKing(oppColor);
-		//king.getColor();
-		
+		// king.getColor();
+
+		// update the piece you would like to move in the model
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(start.getPiece());
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece()
+				.setPosition(end.getPostition());
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);
+
+		// check for valid move from that piece to opposing king
+		// return true if king is in check (checkMove returns true)
+		if (model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece()
+				.checkMove(king.getPosition(), model.getBoard()) == true) {
+
+			// revert the piece you would like to move in the model
+			model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
+			model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
+					.setPosition(end.getPostition());
+			model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
+			return true;
+		}
+
 		// check for a valid move to the king location
 		// return the condition, True if in check, False if not
 		for (Piece piece : pieceList) {
@@ -182,13 +203,26 @@ public class GameController {
 			} else if (type == PieceType.KING) {
 				piece = new King(type, position, tempColor);
 			}
-			 if (model.getBoard().getPiece(piece.getX(), piece.getY()).checkMove(king.getPosition(), model.getBoard()) == true) {
-				 return true;
-			 } 
+			if (model.getBoard().getPiece(piece.getX(), piece.getY()).checkMove(king.getPosition(),
+					model.getBoard()) == true) {
+				
+				// revert the piece you would like to move in the model
+				model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
+				model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
+						.setPosition(end.getPostition());
+				model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
+				return true;
+			}
 		}
+		
+		// revert the piece you would like to move in the model
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
+				.setPosition(end.getPostition());
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
 		return false;
 	}
-	
+
 	public boolean evaluateSelfCheck(int color) {
 		int oppColor;
 		// if statement to choose color to search for
@@ -203,8 +237,8 @@ public class GameController {
 		List<Piece> pieceList = db.getAllXColorPieces(oppColor);
 		// pull the king of the opposing color
 		Piece king = db.getKing(color);
-		//king.getColor();
-		
+		// king.getColor();
+
 		// check for a valid move to the king location
 		// return the condition, True if in check, False if not
 		for (Piece piece : pieceList) {
@@ -225,9 +259,10 @@ public class GameController {
 			} else if (type == PieceType.KING) {
 				piece = new King(type, position, tempColor);
 			}
-			 if (model.getBoard().getPiece(piece.getX(), piece.getY()).checkMove(king.getPosition(), model.getBoard()) == true) {
-				 return true;
-			 } 
+			if (model.getBoard().getPiece(piece.getX(), piece.getY()).checkMove(king.getPosition(),
+					model.getBoard()) == true) {
+				return true;
+			}
 		}
 		return false;
 	}
