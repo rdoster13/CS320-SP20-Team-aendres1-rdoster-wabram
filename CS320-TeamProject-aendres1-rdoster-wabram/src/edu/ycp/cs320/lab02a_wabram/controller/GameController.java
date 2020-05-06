@@ -146,7 +146,7 @@ public class GameController {
 
 	}
 	
-	public boolean checkOppCheckCond(int color) {
+	public boolean evaluateOppCheck(int color) {
 		int oppColor;
 		// if statement to choose color to search for
 		if (color == 0) {
@@ -163,7 +163,50 @@ public class GameController {
 		//king.getColor();
 		
 		// check for a valid move to the king location
-		// return the condition, True if in chck, False if not
+		// return the condition, True if in check, False if not
+		for (Piece piece : pieceList) {
+			int tempColor = piece.getColor();
+			PieceType type = piece.getPieceType();
+			Point position = piece.getPosition();
+
+			if (type == PieceType.PAWN) {
+				piece = new Pawn(type, position, tempColor);
+			} else if (type == PieceType.ROOK) {
+				piece = new Rook(type, position, tempColor);
+			} else if (type == PieceType.KNIGHT) {
+				piece = new Knight(type, position, tempColor);
+			} else if (type == PieceType.BISHOP) {
+				piece = new Bishop(type, position, tempColor);
+			} else if (type == PieceType.QUEEN) {
+				piece = new Queen(type, position, tempColor);
+			} else if (type == PieceType.KING) {
+				piece = new King(type, position, tempColor);
+			}
+			 if (model.getBoard().getPiece(piece.getX(), piece.getY()).checkMove(king.getPosition(), model.getBoard()) == true) {
+				 return true;
+			 } 
+		}
+		return false;
+	}
+	
+	public boolean evaluateSelfCheck(int color) {
+		int oppColor;
+		// if statement to choose color to search for
+		if (color == 0) {
+			oppColor = 1;
+		} else {
+			oppColor = 0;
+		}
+		// get the list of pieces of the specified color
+		DatabaseProvider.setInstance(new DerbyDatabase());
+		IDatabase db = DatabaseProvider.getInstance();
+		List<Piece> pieceList = db.getAllXColorPieces(oppColor);
+		// pull the king of the opposing color
+		Piece king = db.getKing(color);
+		//king.getColor();
+		
+		// check for a valid move to the king location
+		// return the condition, True if in check, False if not
 		for (Piece piece : pieceList) {
 			int tempColor = piece.getColor();
 			PieceType type = piece.getPieceType();
