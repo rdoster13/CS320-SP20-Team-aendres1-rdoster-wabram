@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import edu.ycp.cs320.lab02a_wabram.model.Bishop;
 import edu.ycp.cs320.lab02a_wabram.model.Game;
 import edu.ycp.cs320.lab02a_wabram.model.King;
@@ -182,10 +181,9 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 
 				try {
-					stmt = conn.prepareStatement(" update usercreds" 
-						+ " set usercreds.gameturn = ? ");
+					stmt = conn.prepareStatement(" update usercreds" + " set usercreds.gameturn = ? ");
 					stmt.setInt(1, nextTurn);
-					
+
 					stmt.executeUpdate();
 
 					System.out.println("Turn updated on usercreds table");
@@ -203,25 +201,24 @@ public class DerbyDatabase implements IDatabase {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				
-				int result=-1;
+
+				int result = -1;
 				ResultSet resultset;
 				try {
-					stmt = conn.prepareStatement(" select usercreds.gameturn " 
-							+ "from usercreds " 
-							+ "where usercreds.usercreds_id = 1 ");
-					//stmt.setString(1, username);
-					
-					resultset=stmt.executeQuery();
-					
+					stmt = conn.prepareStatement(
+							" select usercreds.gameturn " + "from usercreds " + "where usercreds.usercreds_id = 1 ");
+					// stmt.setString(1, username);
+
+					resultset = stmt.executeQuery();
+
 					Boolean found = false;
 
 					while (resultset.next()) {
 						found = true;
-						
-						int index=1;
-						int turn= resultset.getInt(index++);
-						result= turn;
+
+						int index = 1;
+						int turn = resultset.getInt(index++);
+						result = turn;
 					}
 					// just for fun print statements
 					String color;
@@ -239,7 +236,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 	@Override
 	public List<Piece> getAllXColorPieces(int color) {
 		return executeTransaction(new Transaction<List<Piece>>() {
@@ -250,9 +247,8 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					// retreive all attributes from pieces
-					stmt = conn.prepareStatement("select * "
-							+ "from pieces"
-							+"where pieces.row<8 and pieces.col<8 and color= ? ");
+					stmt = conn.prepareStatement(
+							"select * " + "from pieces" + "where pieces.row<8 and pieces.col<8 and color= ? ");
 					stmt.setInt(1, color);
 
 					List<Piece> result = new ArrayList<Piece>();
@@ -265,40 +261,42 @@ public class DerbyDatabase implements IDatabase {
 					while (resultSet.next()) {
 						found = true;
 
-						int index=1;
-						int pieceid=resultSet.getInt(index++);
-						int color=resultSet.getInt(index++);
-						int typeEnum=resultSet.getInt(index++);
-						int pieceX=resultSet.getInt(index++);
-						int pieceY=resultSet.getInt(index++);
+						int index = 1;
+						int pieceid = resultSet.getInt(index++);
+						int color = resultSet.getInt(index++);
+						int typeEnum = resultSet.getInt(index++);
+						int pieceX = resultSet.getInt(index++);
+						int pieceY = resultSet.getInt(index++);
 						Point position = new Point(pieceX, pieceY);
-						Piece piece= null;
-						PieceType type=null;
+						Piece piece = null;
+						PieceType type = null;
 						if (typeEnum == 0) {
 							type = PieceType.PAWN;
-							piece= new Pawn(type, position, color);
+							piece = new Pawn(type, position, color);
 						} else if (typeEnum == 1) {
 							type = PieceType.ROOK;
-							piece= new Rook(type, position, color);
+							piece = new Rook(type, position, color);
 						} else if (typeEnum == 2) {
 							type = PieceType.KNIGHT;
-							piece= new Knight(type, position, color);
+							piece = new Knight(type, position, color);
 						} else if (typeEnum == 3) {
 							type = PieceType.BISHOP;
-							piece= new Bishop(type, position, color);
+							piece = new Bishop(type, position, color);
 						} else if (typeEnum == 4) {
 							type = PieceType.QUEEN;
-							piece= new Queen(type, position, color);
+							piece = new Queen(type, position, color);
 						} else if (typeEnum == 5) {
 							type = PieceType.KING;
-							piece= new King(type, position, color);
+							piece = new King(type, position, color);
 						}
-						
+
 						piece.setColor(color);
 						piece.setPieceType(type);
 						piece.setPosition(position);
-						//loadPiece(piece, resultSet, 1);
-						//System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
+						// loadPiece(piece, resultSet, 1);
+						// System.out.println("\nPiece Type:" + piece.getPieceType().toString() +
+						// "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" +
+						// piece.getColor());
 						result.add(piece);
 					}
 
@@ -315,7 +313,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 	@Override
 	public Piece getKing(int color) {
 		return executeTransaction(new Transaction<Piece>() {
@@ -326,11 +324,9 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					// retreive all attributes from pieces
-					stmt = conn.prepareStatement("select * "
-							+ "from pieces" 
-							+ "where pieces.type= 5 and pieces.color= ? ");
+					stmt = conn.prepareStatement(
+							"select * " + "from pieces" + "where pieces.type= 5 and pieces.color= ? ");
 					stmt.setInt(1, color);
-					
 
 					Piece result = null;
 
@@ -342,41 +338,24 @@ public class DerbyDatabase implements IDatabase {
 					while (resultSet.next()) {
 						found = true;
 
-						int index=1;
-						int pieceid=resultSet.getInt(index++);
-						int color=resultSet.getInt(index++);
-						int typeEnum=resultSet.getInt(index++);
-						int pieceX=resultSet.getInt(index++);
-						int pieceY=resultSet.getInt(index++);
+						int index = 1;
+						int pieceid = resultSet.getInt(index++);
+						int color = resultSet.getInt(index++);
+						int typeEnum = resultSet.getInt(index++);
+						int pieceX = resultSet.getInt(index++);
+						int pieceY = resultSet.getInt(index++);
 						Point position = new Point(pieceX, pieceY);
-						Piece piece= null;
-						PieceType type=null;
-						if (typeEnum == 0) {
-							type = PieceType.PAWN;
-							piece= new Pawn(type, position, color);
-						} else if (typeEnum == 1) {
-							type = PieceType.ROOK;
-							piece= new Rook(type, position, color);
-						} else if (typeEnum == 2) {
-							type = PieceType.KNIGHT;
-							piece= new Knight(type, position, color);
-						} else if (typeEnum == 3) {
-							type = PieceType.BISHOP;
-							piece= new Bishop(type, position, color);
-						} else if (typeEnum == 4) {
-							type = PieceType.QUEEN;
-							piece= new Queen(type, position, color);
-						} else if (typeEnum == 5) {
-							type = PieceType.KING;
-							piece= new King(type, position, color);
-						}
-						
+						PieceType type = PieceType.KING;
+						Piece piece = new King(type, position, color);
+
 						piece.setColor(color);
 						piece.setPieceType(type);
 						piece.setPosition(position);
-						//loadPiece(piece, resultSet, 1);
-						//System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
-						result=piece;
+						// loadPiece(piece, resultSet, 1);
+						// System.out.println("\nPiece Type:" + piece.getPieceType().toString() +
+						// "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" +
+						// piece.getColor());
+						result = piece;
 					}
 
 					// check if the title was found
@@ -392,8 +371,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
-	
+
 	@Override
 	public List<Piece> loadPieces() {
 		return executeTransaction(new Transaction<List<Piece>>() {
@@ -405,7 +383,6 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					// retreive all attributes from pieces
 					stmt = conn.prepareStatement("select * from pieces");
-					
 
 					List<Piece> result = new ArrayList<Piece>();
 
@@ -417,40 +394,42 @@ public class DerbyDatabase implements IDatabase {
 					while (resultSet.next()) {
 						found = true;
 
-						int index=1;
-						int pieceid=resultSet.getInt(index++);
-						int color=resultSet.getInt(index++);
-						int typeEnum=resultSet.getInt(index++);
-						int pieceX=resultSet.getInt(index++);
-						int pieceY=resultSet.getInt(index++);
+						int index = 1;
+						int pieceid = resultSet.getInt(index++);
+						int color = resultSet.getInt(index++);
+						int typeEnum = resultSet.getInt(index++);
+						int pieceX = resultSet.getInt(index++);
+						int pieceY = resultSet.getInt(index++);
 						Point position = new Point(pieceX, pieceY);
-						Piece piece= null;
-						PieceType type=null;
+						Piece piece = null;
+						PieceType type = null;
 						if (typeEnum == 0) {
 							type = PieceType.PAWN;
-							piece= new Pawn(type, position, color);
+							piece = new Pawn(type, position, color);
 						} else if (typeEnum == 1) {
 							type = PieceType.ROOK;
-							piece= new Rook(type, position, color);
+							piece = new Rook(type, position, color);
 						} else if (typeEnum == 2) {
 							type = PieceType.KNIGHT;
-							piece= new Knight(type, position, color);
+							piece = new Knight(type, position, color);
 						} else if (typeEnum == 3) {
 							type = PieceType.BISHOP;
-							piece= new Bishop(type, position, color);
+							piece = new Bishop(type, position, color);
 						} else if (typeEnum == 4) {
 							type = PieceType.QUEEN;
-							piece= new Queen(type, position, color);
+							piece = new Queen(type, position, color);
 						} else if (typeEnum == 5) {
 							type = PieceType.KING;
-							piece= new King(type, position, color);
+							piece = new King(type, position, color);
 						}
-						
+
 						piece.setColor(color);
 						piece.setPieceType(type);
 						piece.setPosition(position);
-						//loadPiece(piece, resultSet, 1);
-						//System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" + piece.getColor());
+						// loadPiece(piece, resultSet, 1);
+						// System.out.println("\nPiece Type:" + piece.getPieceType().toString() +
+						// "\nPiece Position:" + piece.getPosition() + "\nPiece Color:" +
+						// piece.getColor());
 						result.add(piece);
 					}
 
@@ -467,92 +446,78 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 	public void destroyDB() {
-        executeTransaction(new Transaction<Boolean>() {
-            @Override
-            public Boolean execute(Connection conn) throws SQLException {
-                PreparedStatement stmt1 = null;
-                PreparedStatement stmt2 = null;
-                PreparedStatement stmt3 = null;
-                PreparedStatement stmt4 = null;
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
 
-                try {
-                    stmt1 = conn.prepareStatement(" truncate table usercreds");
-                    stmt1.executeUpdate();
-                    System.out.println("\nusercreds table truncated");
+				try {
+					stmt1 = conn.prepareStatement(" truncate table usercreds");
+					stmt1.executeUpdate();
+					System.out.println("\nusercreds table truncated");
 
-                    stmt2 = conn.prepareStatement(" truncate table pieces");
-                    stmt2.executeUpdate();
-                    System.out.println("\npieces table truncated");
+					stmt2 = conn.prepareStatement(" truncate table pieces");
+					stmt2.executeUpdate();
+					System.out.println("\npieces table truncated");
 
-                    stmt3 = conn.prepareStatement(" drop table usercreds");
-                    stmt3.executeUpdate();
-                    System.out.println("\nusercreds table dropped");
+					stmt3 = conn.prepareStatement(" drop table usercreds");
+					stmt3.executeUpdate();
+					System.out.println("\nusercreds table dropped");
 
-                    stmt4 = conn.prepareStatement(" drop table pieces");
-                    stmt4.executeUpdate();
-                    System.out.println("\npieces table dropped");
+					stmt4 = conn.prepareStatement(" drop table pieces");
+					stmt4.executeUpdate();
+					System.out.println("\npieces table dropped");
 
-                    return true;
-                } finally {
-                    DBUtil.closeQuietly(stmt1);
-                    DBUtil.closeQuietly(stmt2);
-                    DBUtil.closeQuietly(stmt3);
-                    DBUtil.closeQuietly(stmt4);
-                }
-            }
-        });
+					return true;
+				} finally {
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
+				}
+			}
+		});
 
-    }
-	
-	
-	
-		/*
-	   private void loadPiece(Piece piece, ResultSet resultSet, int index) throws SQLException {
-	        piece.setPiece_ID(resultSet.getInt(index++));
-	        piece.setColor(resultSet.getInt(index++));
-	        piece.setType(resultSet.getInt(index++));
-	        piece.setX(resultSet.getInt(index++));
-	        piece.setY(resultSet.getInt(index++));
-	    }
-		*/
-	/*
-	// load piece type, color, and location (row / col) from DB
-	
-		List<Piece<Pieces>> result = new ArrayList<Piece<Pieces>>();
-
-		PreparedStatement stmt = null;
-		ResultSet resultSet = stmt .executeQuery();
-
-		// for testing that a result was returned
-		Boolean found = false;
-
-		while (resultSet.next()) {
-			found = true;
-
-			// create new Author object
-			// retrieve attributes from resultSet starting with index 1
-			Piece author = new Piece();
-			loadAuthor(author, resultSet, 1);
-
-			// create new Book object
-			// retrieve attributes from resultSet starting at index 4
-			Book book = new Book();
-			loadBook(book, resultSet, 4);
-
-			result.add(new Pair<Author, Book>(author, book));
-		}
-
-		// check if the title was found
-		if (!found) {
-			System.out.println("<" + title + "> was not found in the books table");
-		}
-
-		return result;
 	}
-	*/
-	
+
+	/*
+	 * private void loadPiece(Piece piece, ResultSet resultSet, int index) throws
+	 * SQLException { piece.setPiece_ID(resultSet.getInt(index++));
+	 * piece.setColor(resultSet.getInt(index++));
+	 * piece.setType(resultSet.getInt(index++));
+	 * piece.setX(resultSet.getInt(index++)); piece.setY(resultSet.getInt(index++));
+	 * }
+	 */
+	/*
+	 * // load piece type, color, and location (row / col) from DB
+	 * 
+	 * List<Piece<Pieces>> result = new ArrayList<Piece<Pieces>>();
+	 * 
+	 * PreparedStatement stmt = null; ResultSet resultSet = stmt .executeQuery();
+	 * 
+	 * // for testing that a result was returned Boolean found = false;
+	 * 
+	 * while (resultSet.next()) { found = true;
+	 * 
+	 * // create new Author object // retrieve attributes from resultSet starting
+	 * with index 1 Piece author = new Piece(); loadAuthor(author, resultSet, 1);
+	 * 
+	 * // create new Book object // retrieve attributes from resultSet starting at
+	 * index 4 Book book = new Book(); loadBook(book, resultSet, 4);
+	 * 
+	 * result.add(new Pair<Author, Book>(author, book)); }
+	 * 
+	 * // check if the title was found if (!found) { System.out.println("<" + title
+	 * + "> was not found in the books table"); }
+	 * 
+	 * return result; }
+	 */
+
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
