@@ -247,12 +247,12 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					// Retrieve all attributes from pieces
-					stmt = conn.prepareStatement("select * " 
-							+ "from pieces "
-							+ "where pieces.row < 8 and "
-							+ "pieces.col < 8 and "
-							+ "pieces.type != 5 and "
-							+ "pieces.color = ? ");
+					stmt = conn.prepareStatement(" select * " 
+							+ " from pieces "
+							+ " where pieces.row < 8 and "
+							+ " pieces.col < 8 and "
+							+ " pieces.type != 5 and "
+							+ " pieces.color = ? ");
 					stmt.setInt(1, color);
 
 					List<Piece> result = new ArrayList<Piece>();
@@ -328,10 +328,10 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					// Retrieve all attributes from pieces
-					stmt = conn.prepareStatement("select * " 
-									+ "from pieces" 
-									+ "where pieces.type = 5 and "
-									+ "pieces.color = ? ");
+					stmt = conn.prepareStatement(" select * " 
+									+ " from pieces" 
+									+ " where pieces.type = 5 and "
+									+ " pieces.color = ? ");
 					
 					stmt.setInt(1, color);
 

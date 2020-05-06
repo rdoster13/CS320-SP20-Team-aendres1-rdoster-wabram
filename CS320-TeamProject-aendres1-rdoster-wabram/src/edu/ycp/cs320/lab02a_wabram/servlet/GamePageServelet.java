@@ -134,6 +134,7 @@ public class GamePageServelet extends HttpServlet {
 							System.out.print("\n**********************************************");
 							System.out.print("\nYou are in check!");
 							System.out.print("\n**********************************************");
+							System.out.print("\n");
 
 							// add message / status to say check
 							check = true;
