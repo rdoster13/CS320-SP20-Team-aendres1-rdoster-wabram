@@ -37,6 +37,8 @@ public class GamePageServelet extends HttpServlet {
 	int endX;
 	int endY;
 
+	private boolean check = false;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -58,7 +60,7 @@ public class GamePageServelet extends HttpServlet {
 			System.out.println("CHessPage Servlet: creating new game");
 			// We have to write the method to load the new game here.
 			controller.newGame();
-			
+
 			// load the pieces from the DB
 			controller.getPieces();
 
@@ -121,29 +123,38 @@ public class GamePageServelet extends HttpServlet {
 					// if the move check passes, then update the board
 					if (game.getBoard().getPosition(startX, startY).getPiece().checkMove(new Point(endX, endY),
 							game.getBoard()) == true) {
-						// if statement to check on color of piece / move off of board
-						if (game.getBoard().getPosition(endX, endY).getPiece() != null 
-								&& game.getBoard().getPosition(startX, startY).getPiece().getColor() != 
-								game.getBoard().getPosition(endX, endY).getPiece().getColor()) {
-							controller.takePiece(game.getBoard().getPosition(endX, endY), game.getBoard().getPosition(0, 8));
+						// check that move does not put you in check
+						// if (controller.evaluateSelfCheck(
+								//game.getBoard().getPosition(startX, startY).getPiece().getColor(),
+								//game.getBoard().getPosition(startX, startY), game.getBoard().getPosition(endX, endY)) == false) {		
+						// check = false;
+						if (controller.evaluateOppCheck(
+								game.getBoard().getPosition(startX, startY).getPiece().getColor(),
+								game.getBoard().getPosition(startX, startY), game.getBoard().getPosition(endX, endY)) == true) { 
+							System.out.print("\n**********************************************");
+							System.out.print("\nYou are in check!");
+							System.out.print("\n**********************************************");
+
+							// add message / status to say check
+							check = true;
+						} else {
+							check = false;
 						}
-						// controller.updatePieceLocation(startX, startY, endX, endY);
-						controller.movePiece(game.getBoard().getPosition(startX, startY),
-								game.getBoard().getPosition(endX, endY));
+							// if statement to check on color of piece / move off of board
+							if (game.getBoard().getPosition(endX, endY).getPiece() != null
+									&& game.getBoard().getPosition(startX, startY).getPiece().getColor() != game
+											.getBoard().getPosition(endX, endY).getPiece().getColor()) {
+								
+								// Call method to move piece off board if taken
+								controller.takePiece(game.getBoard().getPosition(endX, endY),
+										game.getBoard().getPosition(0, 8));
+							}
+							
+							// controller.updatePieceLocation(startX, startY, endX, endY);
+							controller.movePiece(game.getBoard().getPosition(startX, startY),
+									game.getBoard().getPosition(endX, endY));
 
-						// Call to DerbyDB to update Piece
-						// Nested If to update
-						// TODO: if EMPTY SPACE
-						// TODO: if OCCUPIED
-						// if endX, endY has piece, update both pieces
-						// update moving piece to that space, update taken piece to XXXXXXXXXXXX (off
-						// Board)
-						/*
-						 * if (game.getBoard().getPosition(endX, endY).getPiece() == null) {
-						 * IDatabase.updatePieceLocation(startX, startY, endX, endY);
-						 * IDatabase.updateTurn(u1.getUsername(), game.getTurn(), game.getTurn()+1); }
-						 */
-
+						//}
 					} else {
 						System.out.println("\n INVALID MOVE ");
 						errorMessage = "Invalid Move!";
