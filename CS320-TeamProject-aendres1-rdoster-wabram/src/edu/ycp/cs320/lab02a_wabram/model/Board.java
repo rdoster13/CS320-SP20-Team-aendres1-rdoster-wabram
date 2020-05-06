@@ -16,9 +16,9 @@ public class Board {
 	// 2x2 array to generate an empty board.
 	// null is empty spaces
 	public void newBoard() {
-		board = new Position[8][8];
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board[i].length; j++) {
+		board = new Position[8][9];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 9; j++) {
 				board[i][j] = new Position(null, new Point(i, j));
 			}
 		}

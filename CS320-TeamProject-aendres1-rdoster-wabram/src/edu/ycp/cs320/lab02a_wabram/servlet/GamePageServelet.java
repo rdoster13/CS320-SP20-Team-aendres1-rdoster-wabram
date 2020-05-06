@@ -121,6 +121,12 @@ public class GamePageServelet extends HttpServlet {
 					// if the move check passes, then update the board
 					if (game.getBoard().getPosition(startX, startY).getPiece().checkMove(new Point(endX, endY),
 							game.getBoard()) == true) {
+						// if statement to check on color of piece / move off of board
+						if (game.getBoard().getPosition(endX, endY).getPiece() != null 
+								&& game.getBoard().getPosition(startX, startY).getPiece().getColor() != 
+								game.getBoard().getPosition(endX, endY).getPiece().getColor()) {
+							controller.takePiece(game.getBoard().getPosition(endX, endY), game.getBoard().getPosition(0, 8));
+						}
 						// controller.updatePieceLocation(startX, startY, endX, endY);
 						controller.movePiece(game.getBoard().getPosition(startX, startY),
 								game.getBoard().getPosition(endX, endY));
