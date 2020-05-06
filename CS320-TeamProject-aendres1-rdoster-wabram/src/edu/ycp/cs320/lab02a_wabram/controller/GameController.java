@@ -163,6 +163,10 @@ public class GameController {
 		// pull the king of the opposing color
 		Piece king = db.getKing(oppColor);
 		// king.getColor();
+		
+		// temp store the piece at the end location in case it gets taken. 
+		
+		Piece tempPiece = model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece();
 
 		// update the piece you would like to move in the model
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(start.getPiece());
@@ -179,7 +183,7 @@ public class GameController {
 			model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
 			model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
 					.setPosition(end.getPostition());
-			model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
+			model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
 			return true;
 		}
 
@@ -203,14 +207,15 @@ public class GameController {
 			} else if (type == PieceType.KING) {
 				piece = new King(type, position, tempColor);
 			}
-			if (model.getBoard().getPiece(piece.getX(), piece.getY()).checkMove(king.getPosition(),
+			model.getBoard().getPosition(piece.getPosition().x, piece.getPosition().y).setPiece(piece);
+			if (model.getBoard().getPosition(piece.getPosition().x, piece.getPosition().y).getPiece().checkMove(king.getPosition(),
 					model.getBoard()) == true) {
 				
 				// revert the piece you would like to move in the model
 				model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
 				model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
 						.setPosition(end.getPostition());
-				model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
+				model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
 				return true;
 			}
 		}
@@ -219,7 +224,7 @@ public class GameController {
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
 				.setPosition(end.getPostition());
-		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
 		return false;
 	}
 
