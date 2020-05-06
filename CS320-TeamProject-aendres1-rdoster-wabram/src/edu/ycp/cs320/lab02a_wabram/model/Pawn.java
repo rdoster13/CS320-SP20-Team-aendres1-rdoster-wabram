@@ -104,11 +104,6 @@ public class Pawn extends Piece {
 		return false;
 	}
 
-	@Override
-	public boolean checkOppCheck(Point kingSpace, Board board) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	// TODO: implement as stretch goal
 
