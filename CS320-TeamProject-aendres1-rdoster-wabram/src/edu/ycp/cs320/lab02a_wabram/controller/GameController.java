@@ -21,7 +21,7 @@ import edu.ycp.cs320.lab02a_wabram.model.LoginPage;
 
 public class GameController {
 	private Game model;
-	
+
 	// Set the model
 	public GameController(Game model) {
 		this.model = model;
@@ -86,8 +86,9 @@ public class GameController {
 				piece = new King(type, piece.getPosition(), color);
 			}
 
-			//System.out.println("\nPiece Type:" + piece.getPieceType().toString() + "\nPiece Position:"
-					//+ piece.getPosition() + "\nPiece Color:" + piece.getColor());
+			// System.out.println("\nPiece Type:" + piece.getPieceType().toString() +
+			// "\nPiece Position:"
+			// + piece.getPosition() + "\nPiece Color:" + piece.getColor());
 
 			// Position[][] space = new Position[piece.getX()][piece.getY()];
 			// System.out.println("\nI got here!");
@@ -148,11 +149,14 @@ public class GameController {
 
 	public boolean evaluateOppCheck(int color, Position start, Position end) {
 		int oppColor;
+		String colorString;
 		// if statement to choose color to search for
 		if (color == 0) {
 			oppColor = 1;
+			colorString = "Black";
 		} else {
 			oppColor = 0;
+			colorString = "White";
 		}
 
 		// get the list of pieces of the specified color
@@ -163,9 +167,8 @@ public class GameController {
 		// pull the king of the opposing color
 		Piece king = db.getKing(oppColor);
 		// king.getColor();
-		
-		// temp store the piece at the end location in case it gets taken. 
-		
+
+		// temp store the piece at the end location in case it gets taken.
 		Piece tempPiece = model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece();
 
 		// update the piece you would like to move in the model
@@ -184,6 +187,10 @@ public class GameController {
 			model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
 					.setPosition(end.getPostition());
 			model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
+			System.out.print("\n**********************************************");
+			System.out.print("\n" + colorString + " is in check!");
+			System.out.print("\n**********************************************");
+			System.out.print("\n");
 			return true;
 		}
 
@@ -208,18 +215,22 @@ public class GameController {
 				piece = new King(type, position, tempColor);
 			}
 			model.getBoard().getPosition(piece.getPosition().x, piece.getPosition().y).setPiece(piece);
-			if (model.getBoard().getPosition(piece.getPosition().x, piece.getPosition().y).getPiece().checkMove(king.getPosition(),
-					model.getBoard()) == true) {
-				
+			if (model.getBoard().getPosition(piece.getPosition().x, piece.getPosition().y).getPiece()
+					.checkMove(king.getPosition(), model.getBoard()) == true) {
+
 				// revert the piece you would like to move in the model
 				model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
 				model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
 						.setPosition(end.getPostition());
 				model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
+				System.out.print("\n**********************************************");
+				System.out.print("\n" + colorString + " is in check!");
+				System.out.print("\n**********************************************");
+				System.out.print("\n");
 				return true;
 			}
 		}
-		
+
 		// revert the piece you would like to move in the model
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
@@ -228,13 +239,16 @@ public class GameController {
 		return false;
 	}
 
-	public boolean evaluateSelfCheck(int color) {
+	public boolean evaluateSelfCheck(int color, Position start, Position end) {
 		int oppColor;
+		String colorString;
 		// if statement to choose color to search for
 		if (color == 0) {
 			oppColor = 1;
+			colorString = "White";
 		} else {
 			oppColor = 0;
+			colorString = "Black";
 		}
 		// get the list of pieces of the specified color
 		DatabaseProvider.setInstance(new DerbyDatabase());
@@ -244,31 +258,82 @@ public class GameController {
 		Piece king = db.getKing(color);
 		// king.getColor();
 
-		// check for a valid move to the king location
+		Piece tempPiece = model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece();
+		
+
+		
+		// update the piece you would like to move in the model
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(start.getPiece());
+		
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece().setPosition(end.getPostition());
+		
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(null);
+
+		// check for a valid move to the king location of opposing pieces
 		// return the condition, True if in check, False if not
 		for (Piece piece : pieceList) {
-			int tempColor = piece.getColor();
-			PieceType type = piece.getPieceType();
-			Point position = piece.getPosition();
 
-			if (type == PieceType.PAWN) {
-				piece = new Pawn(type, position, tempColor);
-			} else if (type == PieceType.ROOK) {
-				piece = new Rook(type, position, tempColor);
-			} else if (type == PieceType.KNIGHT) {
-				piece = new Knight(type, position, tempColor);
-			} else if (type == PieceType.BISHOP) {
-				piece = new Bishop(type, position, tempColor);
-			} else if (type == PieceType.QUEEN) {
-				piece = new Queen(type, position, tempColor);
-			} else if (type == PieceType.KING) {
-				piece = new King(type, position, tempColor);
-			}
-			if (model.getBoard().getPiece(piece.getX(), piece.getY()).checkMove(king.getPosition(),
-					model.getBoard()) == true) {
-				return true;
+			// set a condition to skip the piece to evaluate if it is being taken by the
+			// piece moving
+			// if then to check if the destination position on board is null
+			if (model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece() != null) {
+
+				// temp store the piece at the end location in case it gets taken.
+				tempPiece = model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece();
+				/*
+				 * model.getBoard().getPosition(start.getPostition().x,
+				 * start.getPostition().y).getPiece() .setPosition(end.getPostition());
+				 * model.getBoard().getPosition(end.getPostition().x,
+				 * end.getPostition().y).setPiece(tempPiece);
+				 */
+			} else {
+				int tempColor = piece.getColor();
+				PieceType type = piece.getPieceType();
+				Point position = piece.getPosition();
+
+				if (type == PieceType.PAWN) {
+					piece = new Pawn(type, position, tempColor);
+				} else if (type == PieceType.ROOK) {
+					piece = new Rook(type, position, tempColor);
+				} else if (type == PieceType.KNIGHT) {
+					piece = new Knight(type, position, tempColor);
+				} else if (type == PieceType.BISHOP) {
+					piece = new Bishop(type, position, tempColor);
+				} else if (type == PieceType.QUEEN) {
+					piece = new Queen(type, position, tempColor);
+				} else if (type == PieceType.KING) {
+					piece = new King(type, position, tempColor);
+				}
+				model.getBoard().getPosition(piece.getPosition().x, piece.getPosition().y).setPiece(piece);
+				// cehck if there is a piece occupying the same position of the piece passed in from the DB, if so, move the DB Piece out of bounds temporarily
+				if (model.getBoard().getPosition(piece.getPosition().x, piece.getPosition().y) == 
+						model.getBoard().getPosition(tempPiece.getPosition().x, tempPiece.getPosition().y)) {
+					model.getBoard().getPosition(1, 8).setPiece(piece);
+				}
+				if (model.getBoard().getPosition(piece.getPosition().x, piece.getPosition().y).getPiece()
+						.checkMove(king.getPosition(), model.getBoard()) == true) {
+
+					// revert the piece you would like to move in the model
+					model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
+					
+					model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece().setPosition(end.getPostition());
+					
+					model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
+					System.out.print("\n**********************************************");
+					System.out.print("\nInvalid Move!");
+					System.out.print("\nThis would put " + colorString + " in check!");
+					System.out.print("\n**********************************************");
+					System.out.print("\n");
+					return true;
+				}
 			}
 		}
+
+		// revert the piece you would like to move in the model
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
+				.setPosition(end.getPostition());
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
 		return false;
 	}
 
