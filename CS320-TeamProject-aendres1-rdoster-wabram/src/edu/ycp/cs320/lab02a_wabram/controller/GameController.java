@@ -319,10 +319,10 @@ public class GameController {
 					
 					model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece().setPosition(end.getPostition());
 					
-					model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempTakenPiece);
+					model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempStartingPiece);
 					System.out.print("\n**********************************************");
 					System.out.print("\nInvalid Move!");
-					System.out.print("\nThis would put " + colorString + " is in check!");
+					System.out.print("\nThis would put " + colorString + " in check!");
 					System.out.print("\n**********************************************");
 					System.out.print("\n");
 					return true;
@@ -334,7 +334,7 @@ public class GameController {
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
 				.setPosition(end.getPostition());
-		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempStartingPiece);
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempTakenPiece);
 		return false;
 	}
 
