@@ -37,11 +37,11 @@
 		<input type="hidden" name="x1">
 		<input type="hidden" name="y1">
 		<div class='space'>
-		<table class="board">
+		<table class = "board">
 			<% for (int y = 0; y < 8; y++ ) { %>
-			<tr>
+			<tr class = "board">
 				<% for (int x = 0; x < 8; x++) { %>
-				<td onclick= "transferCallToServlet(<%=x%> , <%=y%>)" class= "test<%=(x+y)%2%>" >
+				<td class = "board" onclick= "transferCallToServlet(<%=x%> , <%=y%>)" class= "test<%=(x+y)%2%>" >
 					<% if (model.getBoard().getPosition(x, y).getPiece() != null) {
 						String type = null;
 						
@@ -83,15 +83,15 @@
 		<form action= "${pageContext.servletContext.contextPath}/chessPage" method="post">
 			<input type="Submit" name="newgame" value="New Game">
 		</form>
-		
+		<c:if test="${! empty errorMessage}">
+			<div class="error">${errorMessage}</div>
+		</c:if>
 		</div>
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${gameLog}</div>
 		</c:if>
 		
 		</form>
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
+		
 	</body> 
 </html>
