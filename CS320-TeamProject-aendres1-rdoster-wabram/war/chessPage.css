@@ -8,13 +8,17 @@ td.board {
 	border-style: solid solid none;
 }
 
-tr.board:nth-child(odd) td.board:nth-child(even),
-tr.board:nth-child(even) td.board:nth-child(odd) {
-    background: grey;
+tr.board:nth-child(odd) td.board:nth-child(even), tr.board:nth-child(even) td.board:nth-child(odd)
+	{
+	background: grey;
 }
 
-
-
+tr.board:nth-child(odd):hover td.board:nth-child(even):hover, tr.board:nth-child(even):hover td.board:nth-child(odd):hover
+	{
+	width: 70px;
+	height: 70px;
+	background: purple;
+	}
 td.board:hover {
 	width: 70px;
 	height: 70px;
@@ -45,7 +49,6 @@ img {
 	color: red;
 	Position: center;
 	height: 100px;
-	
 }
 
 .chess {
