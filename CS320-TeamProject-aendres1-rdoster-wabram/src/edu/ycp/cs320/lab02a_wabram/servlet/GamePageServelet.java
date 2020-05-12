@@ -58,7 +58,7 @@ public class GamePageServelet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (req.getParameter("newgame") != null) {
 			System.out.println("CHessPage Servlet: creating new game");
-			// We have to write the method to load the new game here.
+			// Load the new game 
 			controller.newGame();
 
 			// load the pieces from the DB
@@ -138,72 +138,49 @@ public class GamePageServelet extends HttpServlet {
 						 * game.getBoard().getPosition(endX, endY)) == false) { check = false; }
 						 * 
 						 */
-						
-						//if (check == false) {
-// check if move
-							if (controller.evaluateOppCheck(
-									game.getBoard().getPosition(startX, startY).getPiece().getColor(),
-									game.getBoard().getPosition(startX, startY),
-									game.getBoard().getPosition(endX, endY)) == true) {
-								/*
-								 * System.out.print("\n**********************************************");
-								 * System.out.print("\nYou are in check!");
-								 * System.out.print("\n**********************************************");
-								 * System.out.print("\n");
-								 */
 
-								// add message / status to say check
-								// check = true;
-							}
-							// if statement to check on color of piece / move off of board
-							if (game.getBoard().getPosition(endX, endY).getPiece() != null
-									&& game.getBoard().getPosition(startX, startY).getPiece().getColor() != game
-											.getBoard().getPosition(endX, endY).getPiece().getColor()) {
+						// if (check == false) {
+						// check if move
+						if (controller.evaluateOppCheck(
+								game.getBoard().getPosition(startX, startY).getPiece().getColor(),
+								game.getBoard().getPosition(startX, startY),
+								game.getBoard().getPosition(endX, endY)) == true) {
+							/*
+							 * System.out.print("\n**********************************************");
+							 * System.out.print("\nYou are in check!");
+							 * System.out.print("\n**********************************************");
+							 * System.out.print("\n");
+							 */
 
-								// Call method to move piece off board if taken
-								controller.takePiece(game.getBoard().getPosition(endX, endY),
-										game.getBoard().getPosition(0, 8));
-							}
-
-							
-							// controller.updatePieceLocation(startX, startY, endX, endY);
-							controller.movePiece(game.getBoard().getPosition(startX, startY),
-									game.getBoard().getPosition(endX, endY));
-						/*
-						 * } else {
-							*/// check that move does not put you in check
-							if (controller.evaluateSelfCheck(
-									game.getBoard().getPosition(startX, startY).getPiece().getColor(),
-									game.getBoard().getPosition(startX, startY),
-									game.getBoard().getPosition(endX, endY)) == false) {
-								check = false;
-								
-								// if statement to check on color of piece / move off of board
-								if (game.getBoard().getPosition(endX, endY).getPiece() != null
-										&& game.getBoard().getPosition(startX, startY).getPiece().getColor() != game
-												.getBoard().getPosition(endX, endY).getPiece().getColor()) {
-
-									// Call method to move piece off board if taken
-									controller.takePiece(game.getBoard().getPosition(endX, endY),
-											game.getBoard().getPosition(0, 8));
-								}
-
-								// controller.updatePieceLocation(startX, startY, endX, endY);
-								controller.movePiece(game.getBoard().getPosition(startX, startY),
-										game.getBoard().getPosition(endX, endY));
-							}
+							// add message / status to say check
+							// check = true;
 						}
-						
-					} else {
-						System.out.println("\n INVALID MOVE ");
-						errorMessage = "Invalid Move!";
-					}
-				}
+						// if statement to check on color of piece / move off of board
+						if (game.getBoard().getPosition(endX, endY).getPiece() != null
+								&& game.getBoard().getPosition(startX, startY).getPiece().getColor() != game.getBoard()
+										.getPosition(endX, endY).getPiece().getColor()) {
 
-				req.setAttribute("model", game);
-				req.setAttribute("errorMessage", errorMessage);
-				System.out.println("GamePage Servlet: doGet");
-				req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
+							// Call method to move piece off board if taken
+							controller.takePiece(game.getBoard().getPosition(endX, endY),
+									game.getBoard().getPosition(0, 8));
+						}
+
+						// controller.updatePieceLocation(startX, startY, endX, endY);
+						controller.movePiece(game.getBoard().getPosition(startX, startY),
+								game.getBoard().getPosition(endX, endY));
+
+					}
+
+				} else {
+					System.out.println("\n INVALID MOVE ");
+					errorMessage = "Invalid Move!";
+				}
 			}
+
+			req.setAttribute("model", game);
+			req.setAttribute("errorMessage", errorMessage);
+			System.out.println("GamePage Servlet: doGet");
+			req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 		}
+	}
 }
