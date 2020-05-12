@@ -38,6 +38,7 @@ public class GamePageServelet extends HttpServlet {
 	int endY;
 
 	private boolean check = false;
+	private boolean selfCheck=false;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -133,21 +134,14 @@ public class GamePageServelet extends HttpServlet {
 								game.getBoard().getPosition(startX, startY).getPiece().getColor(),
 								game.getBoard().getPosition(startX, startY),
 								game.getBoard().getPosition(endX, endY)) == false) {
-							check = false;
+							selfCheck = false;
+						}
+						else {
+							selfCheck=true;
 						}
 						
 
-						if (check == false) {
-														
-							// if statement to check on color of piece / move off of board
-							if (game.getBoard().getPosition(endX, endY).getPiece() != null
-									&& game.getBoard().getPosition(startX, startY).getPiece().getColor() != game
-											.getBoard().getPosition(endX, endY).getPiece().getColor()) {
-
-								// Call method to move piece off board if taken
-								controller.takePiece(game.getBoard().getPosition(endX, endY),
-										game.getBoard().getPosition(0, 8));
-							}
+						if (selfCheck == false) {
 							
 							// check if move 
 							if (controller.evaluateOppCheck(
@@ -163,11 +157,25 @@ public class GamePageServelet extends HttpServlet {
 
 								// add message / status to say check
 								check = true;
+							}	
+							
+							// if statement to check on color of piece / move off of board
+							if (game.getBoard().getPosition(endX, endY).getPiece() != null
+									&& game.getBoard().getPosition(startX, startY).getPiece().getColor() != game
+											.getBoard().getPosition(endX, endY).getPiece().getColor()) {
+
+								// Call method to move piece off board if taken
+								controller.takePiece(game.getBoard().getPosition(endX, endY),
+										game.getBoard().getPosition(0, 8));
 							}
+							
+							
 							// controller.updatePieceLocation(startX, startY, endX, endY);
 							controller.movePiece(game.getBoard().getPosition(startX, startY),
 									game.getBoard().getPosition(endX, endY));
-						} else {
+						} 
+						else {
+							/*
 							// check that move does not put you in check
 							if (controller.evaluateSelfCheck(
 									game.getBoard().getPosition(startX, startY).getPiece().getColor(),
@@ -188,6 +196,7 @@ public class GamePageServelet extends HttpServlet {
 								controller.movePiece(game.getBoard().getPosition(startX, startY),
 										game.getBoard().getPosition(endX, endY));
 							}
+							*/
 						}
 					} else {
 						System.out.println("\n INVALID MOVE ");

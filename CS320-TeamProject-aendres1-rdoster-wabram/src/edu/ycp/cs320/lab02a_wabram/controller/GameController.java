@@ -262,7 +262,13 @@ public class GameController {
 
 		// temp store the piece at the end location in case it gets taken.
 		Piece tempPiece = model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece();
-
+		if(tempPiece!=null) {
+			Point offBoardPoint= new Point(1,8);
+			model.getBoard().getPosition(1, 8).setPiece(tempPiece);
+			model.getBoard().getPosition(1, 8).getPiece()
+					.setPosition(offBoardPoint);
+			model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
+		}
 		// update the piece you would like to move in the model
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(start.getPiece());
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece()
@@ -272,11 +278,15 @@ public class GameController {
 
 		// check for a valid move to the king location
 		// return the condition, True if in check, False if not
+		Point excluded= (end.getPostition());
+		Point offBoardPoint= new Point(1,8);
 		for (Piece piece : pieceList) {
 			int tempColor = piece.getColor();
 			PieceType type = piece.getPieceType();
 			Point position = piece.getPosition();
-
+			if(piece.getPosition()== excluded) {
+				position=offBoardPoint;
+			}
 			if (type == PieceType.PAWN) {
 				piece = new Pawn(type, position, tempColor);
 			} else if (type == PieceType.ROOK) {
@@ -298,7 +308,14 @@ public class GameController {
 				model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
 				model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
 						.setPosition(end.getPostition());
-				model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
+				model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
+				
+				//revert the off board piece back to end position
+				if(tempPiece!=null) {
+					model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
+					model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece().setPosition(end.getPostition());
+					model.getBoard().getPosition(1, 8).setPiece(null);
+				}
 				System.out.print("\n**********************************************");
 				System.out.print("\nINVALID MOVE!");
 				System.out.print("\n" + colorString + " must diffuse the Check!");
@@ -312,8 +329,23 @@ public class GameController {
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
 		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
 				.setPosition(end.getPostition());
+		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(null);
+		
+		//revert the off board piece back to end position
+		if(tempPiece!=null) {
+			model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
+			model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).getPiece().setPosition(end.getPostition());
+			model.getBoard().getPosition(1, 8).setPiece(null);
+		}
+		
+		/*
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).setPiece(end.getPiece());
+		model.getBoard().getPosition(start.getPostition().x, start.getPostition().y).getPiece()
+				.setPosition(end.getPostition());
 		model.getBoard().getPosition(end.getPostition().x, end.getPostition().y).setPiece(tempPiece);
-		return false;
+		*/
+		
+		return false;		
 	}
 
 }
