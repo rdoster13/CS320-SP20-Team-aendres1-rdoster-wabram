@@ -26,7 +26,7 @@
 					<td><input type="text" name="password" size="12" value="${password}" /></td>
 				</tr>
 			</table>
-			<input type="Submit" name="submit" value="Login">
+			<input class = 'button' type="Submit" name="submit" value="Login">
 		</form>
 	</body>
 </html>

@@ -4,4 +4,33 @@
 
 td.label {
 	text-align: right;
+	font-size: 150%;
+	padding-left: 50px;
+}
+
+html {
+	background-color: palegoldenrod;
+}
+
+.button {
+	background-color: #ff8000;
+	color: white;
+	padding: 15px 32px;
+	margin-left: 50px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+}
+
+body {
+	margin-top: 50px;
+}
+
+html {
+	overflow-y: hidden ! important;
+	overflow-x: hidden ! important;
+	background-image: url("./images/chess-6-1.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
 }

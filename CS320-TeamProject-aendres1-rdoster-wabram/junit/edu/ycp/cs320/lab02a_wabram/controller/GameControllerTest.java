@@ -151,23 +151,5 @@ public class GameControllerTest {
 
 	}
 
-	/*
-	 * @Test public void testCheckMate() { // Create a scenario; king is surrounded
-	 * by rooks on all sides. game.getBoard().setPiece(new King(PieceType.KING, new
-	 * Point(1,0), 1)); game.getBoard().setPiece(new Rook(PieceType.ROOK, new
-	 * Point(0,0), 0)); game.getBoard().setPiece(new Rook(PieceType.ROOK, new
-	 * Point(2,0), 0)); game.getBoard().setPiece(new Rook(PieceType.ROOK, new
-	 * Point(0,1), 0)); game.getBoard().setPiece(new Rook(PieceType.ROOK, new
-	 * Point(1,1), 0)); game.getBoard().setPiece(new Rook(PieceType.ROOK, new
-	 * Point(2,1), 0));
-	 * 
-	 * // King should be in check. assertTrue(controller.checkmate());
-	 * 
-	 * // Get rid of the piece directly in front of the king.
-	 * game.getBoard().getPosition(1, 1).setPiece(null);
-	 * 
-	 * // The king should NOT be in check. assertFalse(controller.checkmate()); }
-	 * 
-	 */
 
 }
