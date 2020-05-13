@@ -1,5 +1,5 @@
-background {
-	background-color: palegoldenrod;
+html {
+	background-color: #8c8cff;
 }
 
 td.board {
@@ -36,23 +36,28 @@ img {
 }
 
 .space {
-	width: 650px;
-	height: 700px;
+	width: 640px;
+	height: 620px;
 	position: Fixed;
-	/*background-color: #ff80ff; 
+	background-color: white; 
 	/*top: 100px;*/
-	left: 30px;
-	top: 50px
+	left: 100px;
+	top: 100px
 }
 
 .error {
 	color: red;
-	Position: center;
-	height: 100px;
+	font-size: 200%;
+}
+
+.check {
+	color: green;
+	font-size: 200%;
 }
 
 .chess {
-	color: red;
+	color: purple;
 	position: fixed;
-	left: 310px;
+	left: 300px;
+	font-size: 400%;
 }
