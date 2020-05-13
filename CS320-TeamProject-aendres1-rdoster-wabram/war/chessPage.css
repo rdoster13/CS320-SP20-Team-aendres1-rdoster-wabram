@@ -1,5 +1,9 @@
 html {
-	background-color: palegoldenrod;
+	overflow-y: hidden ! important;
+	overflow-x: hidden ! important;
+	background-image: url("./images/chess-6-1.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 td.board {
