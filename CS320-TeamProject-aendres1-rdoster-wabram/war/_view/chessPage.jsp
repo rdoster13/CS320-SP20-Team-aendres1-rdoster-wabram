@@ -81,7 +81,7 @@
 			
 		</table> 
 			<form action= "${pageContext.servletContext.contextPath}/chessPage" method="post">
-				<input type="Submit" name="newgame" value="New Game">
+				<input class = 'button' type="Submit" name="newgame" value="New Game">
 			</form>
 		
 		<c:if test="${! empty errorMessage}">
