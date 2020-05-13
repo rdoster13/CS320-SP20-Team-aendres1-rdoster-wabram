@@ -16,6 +16,7 @@ public class LoginPageController {
 	}
 	*/
 	public boolean validCreds(String username, String password) throws SQLException {
+		
 		return model.validCreds(username, password);
 	}
 	
