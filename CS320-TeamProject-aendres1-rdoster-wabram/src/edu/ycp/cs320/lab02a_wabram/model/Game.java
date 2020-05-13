@@ -54,14 +54,15 @@ public class Game {
 		return board;
 	}
 
-	public void setGameNumber(int gameNum) {
+	/*public void setGameNumber(int gameNum) {
 		this.gameNum = gameNum;
 	}
+	
 
 	public int getGameNumber() {
 		return gameNum;
 	}
-
+	 */
 	public int getTurn() {
 		return turn;
 	}
@@ -78,6 +79,7 @@ public class Game {
 		return player2;
 	}
 
+	/*
 	public void newGame() {
 		// 0 = white and 1 = black
 		// create pawns
@@ -107,4 +109,5 @@ public class Game {
 		board.setPiece(new King(PieceType.KING, new Point(3, 0), 1));
 		board.setPiece(new King(PieceType.KING, new Point(3, 7), 0));
 	}
+	*/
 }

@@ -78,19 +78,22 @@
 				 <% } %>
 			</tr> 
 			<% } %> 
+			
 		</table> 
+			<form action= "${pageContext.servletContext.contextPath}/chessPage" method="post">
+				<input type="Submit" name="newgame" value="New Game">
+			</form>
 		
-		<form action= "${pageContext.servletContext.contextPath}/chessPage" method="post">
-			<input type="Submit" name="newgame" value="New Game">
-		</form>
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 		</c:if>
-		</div>
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${gameLog}</div>
+		
+		<c:if test="${! empty checkMessage}">
+			<div class="check">${checkMessage}</div>
 		</c:if>
 		
+		</div>
+				
 		</form>
 		
 	</body> 

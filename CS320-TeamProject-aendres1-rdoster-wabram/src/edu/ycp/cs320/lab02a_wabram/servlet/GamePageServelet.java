@@ -36,12 +36,12 @@ public class GamePageServelet extends HttpServlet {
 	int startY;
 	int endX;
 	int endY;
+	String oppColor = null;
 
-	private boolean check = false;
+	//private boolean check = false;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		// load the pieces from the DB
 		controller.getPieces();
 
@@ -49,6 +49,7 @@ public class GamePageServelet extends HttpServlet {
 		game.getBoard();
 
 		req.setAttribute("model", game);
+		
 		System.out.println(" \nGamePage Servlet: doGet");
 
 		req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
@@ -57,7 +58,8 @@ public class GamePageServelet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (req.getParameter("newgame") != null) {
-			System.out.println("CHessPage Servlet: creating new game");
+			
+			System.out.println("ChessPage Servlet: creating new game");
 			// Load the new game
 			controller.newGame();
 
@@ -69,11 +71,14 @@ public class GamePageServelet extends HttpServlet {
 
 			req.setAttribute("model", game);
 			System.out.println(" \nGamePage Servlet: doGet");
-
+			
 			req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 		} else {
 			// Error Message Printing
 			String errorMessage = null;
+
+			// Check Message Printing
+			String checkMessage = null;
 
 			System.out.println("GamePage Servlet: doPost");
 
@@ -99,6 +104,7 @@ public class GamePageServelet extends HttpServlet {
 				}
 
 				req.setAttribute("model", game);
+			
 				req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 			}
 
@@ -154,6 +160,14 @@ public class GamePageServelet extends HttpServlet {
 
 							// add message / status to say check
 							// check = true;
+							if (game.getBoard().getPosition(startX, startY).getPiece().getColor() == 0) {
+								oppColor = "Black";
+							} else {
+								oppColor = "White";
+							}
+							System.out.println("\n" + oppColor + " is in check!");
+							checkMessage = "\n" + oppColor + " is in check!";
+
 						}
 						// if statement to check on color of piece / move off of board
 						if (game.getBoard().getPosition(endX, endY).getPiece() != null
@@ -179,6 +193,7 @@ public class GamePageServelet extends HttpServlet {
 
 			req.setAttribute("model", game);
 			req.setAttribute("errorMessage", errorMessage);
+			req.setAttribute("checkMessage", checkMessage);
 			System.out.println("GamePage Servlet: doGet");
 			req.getRequestDispatcher("/_view/chessPage.jsp").forward(req, resp);
 		}
