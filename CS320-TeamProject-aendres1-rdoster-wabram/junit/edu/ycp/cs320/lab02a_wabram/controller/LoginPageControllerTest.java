@@ -37,8 +37,8 @@ public class LoginPageControllerTest {
 	public void checkValidCreds() throws SQLException {
 		assertTrue(controller.validCreds("wabram", "wabram"));
 		assertTrue(controller.validCreds("rdoster", "rdoster"));
-		//assertTrue(controller.validCreds("Alina", "Alina")); 
-		//assertFalse(controller.validCreds("Flamingo", "ProfHakeIsA"));
+		assertFalse(controller.validCreds("Alina", "Alina")); 
+		assertFalse(controller.validCreds("Flamingo", "ProfHakeIsA"));
 	}
 	
 }
