@@ -116,8 +116,9 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 				try {
-					stmt = conn.prepareStatement("select usercreds.username, usercreds.password " + "from usercreds "
-							+ "where (usercreds.username = ? and usercreds.password = ?) or 1 = 1");// + "where
+					stmt = conn.prepareStatement("select usercreds.username, usercreds.password " 
+							+ "from usercreds "
+							+ "where usercreds.username = ? and usercreds.password = ? ");// + "where
 																									// usercreds.username=
 																									// ? and
 																									// usercreds.password=
